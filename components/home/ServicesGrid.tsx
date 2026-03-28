@@ -3,8 +3,9 @@
 import { useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
-import { PenTool, Code2, Megaphone, Cpu, Headphones, ArrowRight } from "lucide-react";
+import { PenTool, Code2, Megaphone, Cpu, Headphones, ArrowRight, ArrowUpRight } from "lucide-react";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 const iconMap = { PenTool, Code2, Megaphone, Cpu, Headphones };
 
@@ -48,7 +49,7 @@ const ServicePanel = ({ service, index, total }: { service: any, index: number, 
              <span className="h-px bg-border flex-1"></span>
           </div>
           
-          <h2 className="font-[family-name:var(--font-shippori)] text-5xl md:text-7xl xl:text-[8rem] font-bold text-text leading-none tracking-tighter mb-8">
+          <h2 className="font-[family-name:var(--font-shippori)] text-5xl md:text-7xl xl:text-[6rem] font-bold text-text leading-none tracking-tighter mb-8">
             {service.title}
           </h2>
 
@@ -63,22 +64,30 @@ const ServicePanel = ({ service, index, total }: { service: any, index: number, 
         </div>
 
         {/* Right: Structural service details with parallax icon */}
-        <div className="flex-1 w-full order-1 lg:order-2 relative h-[50vh] lg:h-[70vh] border border-border bg-surface p-8 lg:p-12 flex flex-col justify-between overflow-hidden group">
+        <div className="flex-1 w-full order-1 lg:order-2 relative min-h-[50vh] lg:min-h-[70vh] h-auto border border-border bg-surface p-8 lg:p-12 flex flex-col justify-between overflow-hidden">
            
-           <motion.div style={{ y }} className="absolute -right-20 -top-20 opacity-[0.03] text-gold group-hover:opacity-[0.08] transition-opacity duration-700">
+           <motion.div style={{ y }} className="absolute -right-20 -top-20 opacity-[0.03] text-gold group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none">
              {Icon && <Icon size={400} strokeWidth={1} />}
            </motion.div>
 
-           <div className="relative z-10">
+           <div className="relative z-10 w-full">
               <h3 className="font-[family-name:var(--font-syne)] uppercase tracking-[0.2em] text-sm text-gold mb-8">
                 Key Deliverables
               </h3>
               
-              <ul className="space-y-4">
-                {service.subServices.map((sub: string, i: number) => (
-                  <li key={i} className="flex flex-col">
-                    <span className="text-xl md:text-2xl font-[family-name:var(--font-shippori)] text-text">{sub}</span>
-                    <span className="h-px w-full bg-border/50 mt-4"></span>
+              <ul className="flex flex-col gap-0">
+                {service.subServices.map((sub: { label: string, href: string }, i: number) => (
+                  <li key={i} className="group/item relative border-b border-border/50 last:border-0">
+                    <Link 
+                      href={sub.href} 
+                      className="flex justify-between items-center w-full py-4 text-xl md:text-2xl font-[family-name:var(--font-shippori)] group-hover/item:text-gold group-hover/item:pl-2 transition-all duration-300"
+                    >
+                      <span className="relative z-10">{sub.label}</span>
+                      <ArrowUpRight 
+                        size={20} 
+                        className="translate-y-1 -translate-x-1 group-hover/item:translate-y-0 group-hover/item:translate-x-0 opacity-0 group-hover/item:opacity-100 transition-all duration-500" 
+                      />
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -98,15 +107,17 @@ const ServicePanel = ({ service, index, total }: { service: any, index: number, 
 };
 
 export default function ServicesGrid() {
+  const filteredServices = SERVICES.filter(service => service.id !== 'solutions');
+
   return (
     <section className="relative bg-bg w-full" id="services">
       {/* The container needs to be relative, and we map over services to create sticky panels */}
-      {SERVICES.map((service, index) => (
+      {filteredServices.map((service, index) => (
         <ServicePanel 
           key={service.id} 
           service={service} 
           index={index} 
-          total={SERVICES.length} 
+          total={filteredServices.length} 
         />
       ))}
     </section>

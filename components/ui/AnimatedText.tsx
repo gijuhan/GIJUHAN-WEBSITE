@@ -59,14 +59,14 @@ export function StaggeredText({
     <div ref={ref}>
       <Tag className={className}>
         {words.map((line, i) => (
-          <span key={i} className="block overflow-hidden">
+          <span key={i} className="block w-fit whitespace-nowrap overflow-hidden pb-6 -mb-6 pr-8 -mr-8 pt-4 -mt-4">
             <motion.span
               className="block"
-              initial={{ y: "100%", opacity: 0 }}
+              initial={{ y: "150%", opacity: 0 }}
               animate={
                 isInView
                   ? { y: 0, opacity: 1 }
-                  : { y: "100%", opacity: 0 }
+                  : { y: "150%", opacity: 0 }
               }
               transition={{
                 duration: 0.7,

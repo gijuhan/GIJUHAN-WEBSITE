@@ -25,7 +25,7 @@ const SOLUTIONS_DATA = [
     color: "#C9A84C"
   },
   {
-    id: "etl-pipeline",
+    id: "etl-elt-pipeline",
     kanji: "抽出",
     title: "ETL & ELT Pipelines",
     tagline: "Data engineering at enterprise scale",
@@ -33,7 +33,7 @@ const SOLUTIONS_DATA = [
     color: "#60A5FA"
   },
   {
-    id: "ci-cd",
+    id: "ci-cd-pipeline",
     kanji: "配備",
     title: "CI/CD Infrastructure",
     tagline: "Automated deployment flows & DevOps",
@@ -41,7 +41,7 @@ const SOLUTIONS_DATA = [
     color: "#34D399"
   },
   {
-    id: "analytics",
+    id: "advanced-analytics-bi",
     kanji: "分析",
     title: "Advanced Analytics & BI",
     tagline: "Actionable intelligence from raw data",
@@ -109,6 +109,7 @@ function SolutionCard({ data, index }: { data: typeof SOLUTIONS_DATA[0], index: 
       style={{ y, opacity }}
       className="group relative p-8 md:p-10 border border-border bg-surface/30 backdrop-blur-sm overflow-hidden hover:border-border/80 transition-all duration-700"
     >
+      <Link href={`/solutions/${data.id}`} className="absolute inset-0 z-20" aria-label={`View ${data.title} Details`} />
       {/* Background Matrix Hover Effect */}
       <div 
         className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"

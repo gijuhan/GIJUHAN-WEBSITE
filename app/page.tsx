@@ -3,6 +3,7 @@ import Hero from "@/components/home/Hero";
 import Marquee from "@/components/home/Marquee";
 import AboutTeaser from "@/components/home/AboutTeaser";
 import ServicesGrid from "@/components/home/ServicesGrid";
+import SolutionsMatrix from "@/components/home/SolutionsMatrix";
 import Philosophy from "@/components/home/Philosophy";
 import StatsBar from "@/components/home/StatsBar";
 import FeaturedWork from "@/components/home/FeaturedWork";
@@ -20,6 +21,7 @@ export default function Home() {
       <Marquee />
       <AboutTeaser />
       <ServicesGrid />
+      <SolutionsMatrix />
       <Philosophy />
       <StatsBar />
       <FeaturedWork />

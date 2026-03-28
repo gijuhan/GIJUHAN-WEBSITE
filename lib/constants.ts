@@ -14,7 +14,11 @@ export const SERVICES = [
     icon: "PenTool",
     description:
       "Crafting intuitive digital experiences that captivate and convert.",
-    subServices: ["Figma", "UI & UX Design", "Graphic Designing"],
+    subServices: [
+      { label: "Figma Prototyping", href: "/services/design/figma-prototyping" },
+      { label: "UI & UX Design", href: "/services/design/ui-ux-design" },
+      { label: "Graphic Designing", href: "/services/design/graphic-designing" },
+    ],
     href: "/services/design",
   },
   {
@@ -24,12 +28,14 @@ export const SERVICES = [
     description:
       "Robust, scalable digital products built for performance and growth.",
     subServices: [
-      "Full Stack Development",
-      "Frontend Development",
-      "Backend Development",
-      "Craft CMS",
-      "DevOps",
-      "Docker",
+      { label: "Full Stack Development", href: "/services/development/full-stack-development" },
+      { label: "Frontend Development", href: "/services/development/frontend-development" },
+      { label: "Backend Development", href: "/services/development/backend-development" },
+      { label: "Craft CMS", href: "/services/development/craft-cms" },
+      { label: "WordPress Development", href: "/services/development/wordpress-development" },
+      { label: "Shopify Development", href: "/services/development/shopify-development" },
+      { label: "DevOps", href: "/services/development/devops" },
+      { label: "Docker", href: "/services/development/docker" },
     ],
     href: "/services/development",
   },
@@ -40,9 +46,9 @@ export const SERVICES = [
     description:
       "Data-driven strategies that amplify your brand and drive qualified growth.",
     subServices: [
-      "Search Engine Optimization",
-      "Social Media Marketing",
-      "Pay Per Click",
+      { label: "SEO & AIO", href: "/services/marketing/seo-aio" },
+      { label: "Social Media Marketing", href: "/services/marketing/social-media-marketing" },
+      { label: "Pay Per Click", href: "/services/marketing/pay-per-click" },
     ],
     href: "/services/marketing",
   },
@@ -53,13 +59,13 @@ export const SERVICES = [
     description:
       "Intelligent automation and data pipelines that power your business at scale.",
     subServices: [
-      "Data Migration",
-      "AI Automation",
-      "ETL & ELT Pipeline",
-      "CI/CD Pipeline",
-      "Advanced Analytics & BI",
+      { label: "Data Migration", href: "/solutions/data-migration" },
+      { label: "AI Automation", href: "/solutions/ai-automation" },
+      { label: "ETL & ELT Pipeline", href: "/solutions/etl-elt-pipeline" },
+      { label: "CI/CD Pipeline", href: "/solutions/ci-cd-pipeline" },
+      { label: "Advanced Analytics & BI", href: "/solutions/advanced-analytics-bi" },
     ],
-    href: "/services/solutions",
+    href: "/solutions",
   },
   {
     id: "support",
@@ -67,7 +73,12 @@ export const SERVICES = [
     icon: "Headphones",
     description:
       "Reliable, expert support so your platforms perform without interruption.",
-    subServices: ["Zoho Full Support", "CRM Support", "CMS Support"],
+    subServices: [
+      { label: "Zoho Full Support", href: "/services/support/zoho-full-support" },
+      { label: "CRM Support", href: "/services/support/crm-support" },
+      { label: "CMS Support", href: "/services/support/cms-support" },
+      { label: "Server & Domain Management", href: "/services/support/server-domain-management" },
+    ],
     href: "/services/support",
   },
 ] as const;

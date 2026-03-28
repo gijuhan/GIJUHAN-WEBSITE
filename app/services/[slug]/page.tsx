@@ -6,6 +6,7 @@ import { SERVICES } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowDownRight, Layers, Lightbulb, Rocket } from "lucide-react";
 import Marquee from "react-fast-marquee";
@@ -145,16 +146,16 @@ export default function ServicePage({ params }: { params: Params }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-              {service.subServices.map((sub, index) => (
-                <FadeIn key={sub} delay={index * 0.1}>
-                  <div className="border-t border-border pt-6 group cursor-none">
+              {service.subServices.map((sub: { label: string, href: string }, index) => (
+                <FadeIn key={sub.href} delay={index * 0.1}>
+                  <Link href={sub.href} className="block border-t border-border pt-6 group cursor-none">
                     <span className="text-gold font-[family-name:var(--font-syne)] text-[10px] tracking-widest block mb-4">
                       {index + 1 < 10 ? `0${index + 1}` : index + 1}
                     </span>
-                    <h3 className="font-[family-name:var(--font-shippori)] text-2xl font-bold text-text group-hover:-translate-y-2 transition-transform duration-500">
-                      {sub}
+                    <h3 className="font-[family-name:var(--font-shippori)] text-2xl font-bold text-text group-hover:text-gold group-hover:-translate-y-2 transition-all duration-500">
+                      {sub.label}
                     </h3>
-                  </div>
+                  </Link>
                 </FadeIn>
               ))}
             </div>

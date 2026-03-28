@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { NAV_LINKS } from "@/lib/constants";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { NAV_LINKS, SERVICES } from "@/lib/constants";
+import { SUB_SERVICES } from "@/lib/sub-services";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-
+  const [activeMenu, setActiveMenu] = useState<"services" | "solutions" | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,25 +20,37 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (isMobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+  const getMenuContent = () => {
+    if (activeMenu === "services") {
+      return SERVICES.map((service) => ({
+        id: service.id,
+        title: service.title,
+        description: service.description,
+        href: service.href,
+        label: "Domain"
+      }));
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileOpen]);
+    if (activeMenu === "solutions") {
+      return SUB_SERVICES.solutions.map((solution) => ({
+        id: solution.slug,
+        title: solution.title,
+        description: solution.description,
+        href: `/solutions/${solution.slug}`,
+        label: "Engineered Solution"
+      }));
+    }
+    return [];
+  };
 
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
+          isScrolled || activeMenu
             ? "bg-bg/80 backdrop-blur-xl border-b border-border"
             : "bg-transparent"
         }`}
+        onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
@@ -55,13 +67,22 @@ export default function Navbar() {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               {NAV_LINKS.map((link) => (
-                <Link
+                <div 
                   key={link.href}
-                  href={link.href}
-                  className="text-sm font-[family-name:var(--font-syne)] text-muted hover:text-text transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
+                  onMouseEnter={() => {
+                    if (link.label === "Services") setActiveMenu("services");
+                    else if (link.label === "Solutions") setActiveMenu("solutions");
+                    else setActiveMenu(null);
+                  }}
+                  className="relative py-8"
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="text-sm font-[family-name:var(--font-syne)] text-muted hover:text-text transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
+                  >
+                    {link.label}
+                  </Link>
+                </div>
               ))}
               <Link
                 href="/contact"
@@ -81,6 +102,46 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* Mega Menu */}
+        <AnimatePresence mode="wait">
+          {activeMenu && (
+            <motion.div
+              key={activeMenu}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="absolute left-0 right-0 top-full bg-surface/95 backdrop-blur-3xl border-b border-border overflow-hidden"
+            >
+              <div className="mx-auto max-w-7xl px-8 py-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {getMenuContent().map((item) => (
+                    <Link 
+                      key={item.id} 
+                      href={item.href}
+                      className="group relative flex flex-col p-6 border border-border/50 bg-bg/50 hover:border-gold/30 transition-all duration-500"
+                      onClick={() => setActiveMenu(null)}
+                    >
+                      <span className="font-[family-name:var(--font-syne)] text-[10px] text-gold uppercase tracking-[0.2em] mb-4">
+                        {item.label}
+                      </span>
+                      <h4 className="font-[family-name:var(--font-shippori)] text-lg font-bold text-text group-hover:text-gold transition-colors mb-2">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-muted leading-relaxed mb-6 line-clamp-2">
+                        {item.description}
+                      </p>
+                      <div className="mt-auto flex items-center gap-2 text-[10px] text-gold/60 font-bold uppercase tracking-widest group-hover:text-gold transition-colors">
+                        Explore <ArrowUpRight size={12} className="translate-x-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Mobile Menu */}
@@ -90,7 +151,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-bg/95 backdrop-blur-2xl md:hidden"
+            className="fixed inset-0 z-40 bg-bg/95 backdrop-blur-2xl md:hidden overflow-y-auto"
           >
             {/* Decorative kanji */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -105,7 +166,7 @@ export default function Navbar() {
               </span>
             </div>
 
-            <div className="flex flex-col items-center justify-center h-full gap-8 relative">
+            <div className="flex flex-col items-center justify-center min-h-full py-20 gap-8 relative">
               {NAV_LINKS.map((link, i) => (
                 <motion.div
                   key={link.href}

@@ -34,7 +34,7 @@ export default function AboutTeaser() {
             <StaggeredText
               text={"Simplicity.\nImprovement.\nPurpose."}
               tag="h2"
-              className="font-[family-name:var(--font-shippori)] text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-text mt-8 leading-[0.9] tracking-tighter mix-blend-difference"
+              className="font-[family-name:var(--font-shippori)] text-4xl md:text-6xl lg:text-[5rem] font-bold text-text mt-8 leading-[0.9] tracking-tighter mix-blend-difference"
               staggerDelay={0.15}
               startDelay={0.1}
             />
