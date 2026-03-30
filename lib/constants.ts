@@ -168,34 +168,54 @@ export const TESTIMONIALS = [
 
 export const BLOG_POSTS = [
   {
-    slug: "ai-automation-future",
-    title: "The Future of AI Automation in Business",
+    slug: "website-most-powerful-salesperson",
+    title: "Why Your Website Is Your Most Powerful Salesperson (And How to Make It Work 24/7)",
     excerpt:
-      "How intelligent automation is reshaping industries and creating new opportunities for growth.",
-    category: "AI & Technology",
-    date: "2025-03-15",
-    readTime: "5 min read",
-    image: "/images/blog/ai-automation.jpg",
+      "Think about your best salesperson for a moment. They know your product inside out. Now ask yourself — does your website do any of that?",
+    category: "Web Strategy",
+    date: "2025-03-28",
+    readTime: "7 min read",
+    image: "/images/blog/website-salesperson-hero.png",
   },
   {
-    slug: "design-principles-2025",
-    title: "Design Principles That Drive Conversion",
+    slug: "brand-identity-isnt-a-logo",
+    title: "Brand Identity Isn't a Logo — It's a Feeling. Here's How to Build One.",
     excerpt:
-      "A deep dive into the design patterns that turn visitors into customers.",
-    category: "Design",
-    date: "2025-03-10",
-    readTime: "4 min read",
-    image: "/images/blog/design-principles.jpg",
-  },
-  {
-    slug: "seo-strategies-modern-web",
-    title: "SEO Strategies for the Modern Web",
-    excerpt:
-      "Beyond keywords — building sustainable organic growth through technical excellence.",
-    category: "Marketing",
-    date: "2025-03-05",
+      "The brands that truly stick aren't just visually consistent — they feel consistent. And that's a very different thing.",
+    category: "Branding",
+    date: "2025-03-21",
     readTime: "6 min read",
-    image: "/images/blog/seo-strategies.jpg",
+    image: "/images/blog/brand-identity-mood.png",
+  },
+  {
+    slug: "ai-automation-future-digital-marketing",
+    title: "AI, Automation & the Future of Digital Marketing — What Businesses Need to Know Now",
+    excerpt:
+      "The words 'AI' and 'automation' get thrown around so much these days. Let's cut through the hype and talk about what actually matters.",
+    category: "AI & Technology",
+    date: "2025-03-14",
+    readTime: "8 min read",
+    image: "/images/blog/website-speed.png",
+  },
+  {
+    slug: "brands-grow-fast-systems-not-marketing",
+    title: "The Secret Behind Brands That Grow Fast: It's Not Just Marketing. It's Systems.",
+    excerpt:
+      "What you're actually looking at isn't just great marketing. It's great systems — and marketing that's built on top of them.",
+    category: "Growth Strategy",
+    date: "2025-03-07",
+    readTime: "7 min read",
+    image: "/images/blog/analytics-dashboard.png",
+  },
+  {
+    slug: "simplicity-wins-kanso-approach",
+    title: "Why Simplicity Wins in a World Full of Digital Noise — The Kanso Approach to Business Growth",
+    excerpt:
+      "Most businesses respond to digital noise by adding more. But the brands cutting through? They're doing the opposite — they're simplifying.",
+    category: "Philosophy",
+    date: "2025-02-28",
+    readTime: "7 min read",
+    image: "/images/blog/brand-visual-language.png",
   },
 ] as const;
 

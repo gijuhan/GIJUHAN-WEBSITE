@@ -2,11 +2,89 @@
 
 import { use } from "react";
 import { notFound } from "next/navigation";
-import { BLOG_POSTS } from "@/lib/constants";
-import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
+import { BLOG_POSTS_FULL, BlogSection } from "@/lib/blog-content";
+import { FadeIn } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import Link from "next/link";
-import { ArrowLeft, Clock } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, Clock, CheckCircle2 } from "lucide-react";
+
+function BlogContent({ sections }: { sections: BlogSection[] }) {
+  return (
+    <>
+      {sections.map((section, index) => {
+        switch (section.type) {
+          case "paragraph":
+            return (
+              <p key={index}>
+                {section.content}
+              </p>
+            );
+          case "heading":
+            return (
+              <h2 key={index} className="!mt-16 !mb-6">
+                {section.content}
+              </h2>
+            );
+          case "subheading":
+            return (
+              <h3 key={index} className="!mt-10 !mb-4">
+                {section.content}
+              </h3>
+            );
+          case "list":
+            return (
+              <ul key={index} className="!my-8 space-y-3">
+                {section.items?.map((item, i) => (
+                  <li key={i} className="!pl-2">{item}</li>
+                ))}
+              </ul>
+            );
+          case "checklist":
+            return (
+              <div key={index} className="!my-8 space-y-4 bg-bg/50 border border-border/30 p-8 rounded-sm">
+                {section.items?.map((item, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <CheckCircle2 size={20} className="text-gold mt-1 shrink-0" />
+                    <span className="text-muted text-base leading-relaxed">{item}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          case "blockquote":
+            return (
+              <blockquote key={index} className="!border-l-[3px] !border-gold bg-bg/80 !p-8 !my-12 italic text-xl text-text/90 leading-relaxed">
+                {section.content}
+              </blockquote>
+            );
+          case "image":
+            return (
+              <div key={index} className="!my-12 relative overflow-hidden rounded-sm border border-border/20">
+                <div className="relative w-full aspect-[16/9]">
+                  <Image
+                    src={section.src!}
+                    alt={section.alt || "Blog illustration"}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 800px) 100vw, 800px"
+                  />
+                </div>
+                {section.alt && (
+                  <div className="px-4 py-3 bg-surface/80 border-t border-border/20">
+                    <span className="text-[11px] text-muted/70 font-[family-name:var(--font-syne)] tracking-widest uppercase">
+                      {section.alt}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          default:
+            return null;
+        }
+      })}
+    </>
+  );
+}
 
 export default function BlogPostPage({
   params,
@@ -15,7 +93,7 @@ export default function BlogPostPage({
 }) {
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = BLOG_POSTS_FULL.find((p) => p.slug === slug);
 
   if (!post) notFound();
 
@@ -50,12 +128,11 @@ export default function BlogPostPage({
                  </div>
              </FadeIn>
 
-             <StaggeredText
-                text={post.title}
-                tag="h1"
-                className="font-[family-name:var(--font-shippori)] text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-text leading-[0.95] tracking-tighter"
-                startDelay={0.2}
-              />
+              <FadeIn delay={0.2}>
+                 <h1 className="font-[family-name:var(--font-shippori)] text-3xl md:text-5xl lg:text-6xl font-bold text-text leading-[1.15] tracking-tighter">
+                   {post.title}
+                 </h1>
+              </FadeIn>
               
               <FadeIn delay={0.6}>
                  <div className="flex items-center gap-6 mt-8 pt-8 border-t border-border/30">
@@ -75,37 +152,14 @@ export default function BlogPostPage({
         <section className="py-20 lg:py-32 relative z-10 bg-surface/50">
            <div className="mx-auto max-w-[800px] px-6 lg:px-8">
               <FadeIn direction="up" delay={0.2}>
-                 <div className="prose prose-invert prose-lg md:prose-xl max-w-none prose-headings:font-[family-name:var(--font-shippori)] prose-headings:font-bold prose-headings:tracking-tighter prose-headings:text-text prose-p:text-muted prose-p:leading-relaxed prose-p:font-[family-name:var(--font-shippori)] prose-a:text-gold prose-a:no-underline hover:prose-a:underline prose-strong:text-text">
-                    {/* Simulated Content Block since we don't have full MDX integrated yet */}
+                 <div className="prose prose-invert prose-lg md:prose-xl max-w-none prose-headings:font-[family-name:var(--font-shippori)] prose-headings:font-bold prose-headings:tracking-tighter prose-headings:text-text prose-p:text-muted prose-p:leading-relaxed prose-p:font-[family-name:var(--font-shippori)] prose-a:text-gold prose-a:no-underline hover:prose-a:underline prose-strong:text-text prose-li:text-muted prose-li:leading-relaxed prose-blockquote:border-gold">
+                    {/* Lead Excerpt */}
                     <p className="lead text-2xl text-text !leading-snug !mb-12 border-l-[3px] border-gold pl-6 bg-surface/80 py-4">
                        {post.excerpt}
                     </p>
                     
-                    <h3>The Engineering Perspective</h3>
-                    <p>
-                      In the rapidly evolving landscape of digital products, traditional methodologies are being systematically dismantled. At Gijuhan, we observe a distinct shift towards architectures that prioritize not just speed, but absolute minimal friction. The principle of Kanso (簡素) teaches us that true elegance is found not in abundance, but in the precise absence of the unnecessary.
-                    </p>
-                    <p>
-                      When we analyze high-performing platforms, the delta between "good" and "exceptional" often lies in sub-second rendering techniques, WebGL integrations, and brutalist structural design. This isn't merely aesthetic—it is a functional requirement for modern attention spans.
-                    </p>
-
-                    <blockquote className="border-gold bg-bg p-8 my-12 structural-border italic text-2xl text-text/90">
-                       "To build for tomorrow, you must engineer with purpose today. Kaizen demands continuous refinement."
-                    </blockquote>
-
-                    <h3>Architectural Shifts</h3>
-                    <p>
-                      Moving towards edge computing and heavily utilizing frameworks like Next.js allows agencies like ours to deploy server-rendered React applications that feel instantaneous. Coupled with Framer Motion for spring-physics-based UI animations, the resulting sensory experience completely overrides the static nature of standard DOM manipulation.
-                    </p>
-                    <ul>
-                      <li>Server Components reducing client JS bundles by up to 40%.</li>
-                      <li>WebGL (React Three Fiber) introducing previously impossible depth.</li>
-                      <li>Tailwind CSS enabling rapid, design-system-driven iterations.</li>
-                    </ul>
-                    
-                    <p>
-                       As we move forward, the integration of these tools will become standard. The agencies that thrive will be those that master the invisible layers—the pipeline, the cache, the edge—while delivering stunning visual fronts.
-                    </p>
+                    {/* Full Blog Content */}
+                    <BlogContent sections={post.content} />
                  </div>
               </FadeIn>
            </div>

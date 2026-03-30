@@ -11,7 +11,7 @@ const HeroOrb = dynamic(() => import("@/components/three/HeroOrb"), {
 
 export default function Hero() {
   const { scrollY } = useScroll();
-  
+
   // Parallax effects for extreme typography
   const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
   const y2 = useTransform(scrollY, [0, 1000], [0, -100]);
@@ -27,11 +27,11 @@ export default function Hero() {
       {/* Extreme Typography Layout */}
       <motion.div style={{ opacity }} className="relative z-10 w-full structural-grid max-w-[1600px] mx-auto pointer-events-none">
         <div className="col-span-12 flex flex-col gap-2">
-          
+
           <motion.div style={{ y: y1 }} className="flex flex-wrap justify-between items-end border-b border-border/50 pb-4 mb-4 gap-4">
             <FadeIn>
               <div className="flex items-center gap-4">
-                <span className="section-label text-gold font-bold tracking-[0.2em] text-[10px] sm:text-xs">GIJUHAN v2.0</span>
+                <span className="section-label text-gold font-bold tracking-[0.2em] text-[10px] sm:text-xs">Let's Build</span>
                 <span className="w-12 h-[1px] bg-gold/50"></span>
               </div>
             </FadeIn>
@@ -49,14 +49,14 @@ export default function Hero() {
             staggerDelay={0.08}
             startDelay={0.3}
           />
-          
+
           <motion.div style={{ y: y2 }} className="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-6 lg:mt-2 relative z-20">
             <FadeIn delay={0.6} direction="up" className="md:w-5/12 lg:w-1/3 z-30">
               <p className="font-[family-name:var(--font-syne)] text-sm md:text-base text-text/80 uppercase tracking-[0.15em] leading-[1.8] border-l-2 border-gold pl-6 py-4 bg-bg/60 backdrop-blur-md rounded-r-lg shadow-2xl">
                 We build immersive, brand-led digital experiences that wow and work hard. The kind that raises eyebrows and sparks emotion.
               </p>
             </FadeIn>
-            
+
             <StaggeredText
               text="MARKETING"
               tag="h1"
@@ -81,10 +81,6 @@ export default function Hero() {
               Scroll
             </span>
           </a>
-          <div className="hidden md:flex flex-col gap-1">
-            <span className="text-xs text-muted uppercase tracking-widest">Scroll to explore</span>
-            <span className="text-sm text-gold font-[family-name:var(--font-shippori)] italic">The new standard.</span>
-          </div>
         </div>
       </FadeIn>
     </section>
