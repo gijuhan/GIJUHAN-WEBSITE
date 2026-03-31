@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import Script from "next/script";
 
 const shippori = Shippori_Mincho({
   variable: "--font-shippori",
@@ -82,6 +83,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-P9GXC5RJ"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <div className="grain-overlay" aria-hidden="true" />
           <CustomCursor />
@@ -90,6 +99,25 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
       </body>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-CVVFVVDMHL" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-CVVFVVDMHL');
+        `}
+      </Script>
+      <Script id="google-tag-manager" strategy="afterInteractive">
+        {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-P9GXC5RJ');
+        `}
+      </Script>
     </html>
   );
 }
