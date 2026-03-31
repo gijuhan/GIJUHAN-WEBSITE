@@ -1,49 +1,30 @@
-import { NextResponse } from "next/server";
-import { z } from "zod";
+import { NextRequest, NextResponse } from 'next/server';
 
-const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  company: z.string().optional(),
-  service: z.string().optional(),
-  budget: z.string().optional(),
-  message: z.string().min(10),
-  referral: z.string().optional(),
-});
-
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
-    const data = contactSchema.parse(body);
+    const body = await req.json();
+    const { name, email, company, service, description, source } = body;
 
-    // Log the form data (replace with Resend/Nodemailer in production)
-    console.log("📬 Contact form submission:", data);
-
-    // TODO: Integrate with Resend or Nodemailer
-    // import { Resend } from 'resend';
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //   from: 'Gijuhan <noreply@gijuhan.com>',
-    //   to: 'hello@gijuhan.com',
-    //   subject: `New Project Inquiry from ${data.name}`,
-    //   html: `...`,
-    // });
-
-    return NextResponse.json(
-      { success: true, message: "Message sent successfully" },
-      { status: 200 }
-    );
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { success: false, errors: error.issues },
-        { status: 400 }
-      );
+    if (!name || !email || !description) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    return NextResponse.json(
-      { success: false, message: "Internal server error" },
-      { status: 500 }
-    );
+    const response = await fetch(process.env.GOOGLE_SCRIPT_URL!, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, company, service, description, source }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      return NextResponse.json({ success: true });
+    } else {
+      throw new Error(result.error || 'Script error');
+    }
+
+  } catch (error) {
+    console.error('Contact form error:', error);
+    return NextResponse.json({ error: 'Failed to submit' }, { status: 500 });
   }
 }
