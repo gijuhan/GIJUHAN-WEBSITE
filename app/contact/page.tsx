@@ -121,13 +121,13 @@ export default function ContactPage() {
                     <h3 className="font-[family-name:var(--font-syne)] text-[10px] tracking-[0.3em] font-bold uppercase">Network Hubs</h3>
                   </div>
                   <div className="space-y-4">
-                    <a href="#" className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] text-text hover:text-gold transition-colors uppercase block">
+                    <a href="https://linkedin.com/company/gijuhan" className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] text-text hover:text-gold transition-colors uppercase block">
                       LinkedIn ↗
                     </a>
-                    <a href="#" className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] text-text hover:text-gold transition-colors uppercase block">
+                    <a href="https://x.com/TheGijuhan" className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] text-text hover:text-gold transition-colors uppercase block">
                       Twitter ↗
                     </a>
-                    <a href="#" className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] text-text hover:text-gold transition-colors uppercase block">
+                    <a href="https://instagram.com/thegijuhan" className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] text-text hover:text-gold transition-colors uppercase block">
                       Instagram ↗
                     </a>
                   </div>
