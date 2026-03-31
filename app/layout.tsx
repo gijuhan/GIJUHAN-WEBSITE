@@ -22,6 +22,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gijuhan.com"),
   title: {
     default: "GIJUHAN — AI Tech & Creative Agency | Design, Development & Marketing",
     template: "%s | GIJUHAN",
@@ -82,6 +83,60 @@ export default function RootLayout({
       className={`${shippori.variable} ${syne.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* ── Organization Schema ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "GIJUHAN",
+              url: "https://gijuhan.com",
+              logo: "https://gijuhan.com/logo.png",
+              description:
+                "GIJUHAN is a global AI tech and creative agency delivering web design, full-stack development, digital marketing, and intelligent automation solutions.",
+              email: "hello@gijuhan.com",
+              foundingLocation: "Pune, India",
+              areaServed: "Worldwide",
+              slogan: "Technology + Marketing = Innovation in Action",
+              sameAs: [
+                "https://linkedin.com/company/gijuhan",
+                "https://instagram.com/thegijuhan",
+                "https://x.com/TheGijuhan",
+              ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "hello@gijuhan.com",
+                contactType: "Customer Support",
+                availableLanguage: "English",
+                hoursAvailable: "Mo-Fr 09:00-18:00",
+              },
+            }),
+          }}
+        />
+
+        {/* ── WebSite Schema (enables Google Sitelinks Search Box) ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "GIJUHAN",
+              url: "https://gijuhan.com",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://gijuhan.com/blog?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <noscript>
           <iframe

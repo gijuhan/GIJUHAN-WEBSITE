@@ -3,10 +3,27 @@ import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactForm from "@/components/contact/ContactForm";
 import { Mail, MapPin, Globe, Clock } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Partner with Gijuhan to engineer your next digital experience. Operating globally from the heart of India.",
+export const metadata = {
+  title: "Start a Project | Contact GIJUHAN — AI & Digital Agency",
+  description: "Ready to build something remarkable? Contact GIJUHAN to start your next web design, development, marketing, or AI automation project. Based in Pune, India. Serving globally.",
+  keywords: ["contact digital agency","hire web design agency","start a web project","digital agency Pune India","get a quote digital agency","hire AI agency","web development inquiry","marketing agency contact","work with GIJUHAN","digital project inquiry","agency consultation","global digital agency contact","hire full stack developer","brand project inquiry","AI solution consultation"],
+  alternates: { canonical: "https://gijuhan.com/contact" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Contact GIJUHAN — Let's Build Together",
+    description: "Open a direct line to GIJUHAN's lead architects. Share your brief, define your vision, and let's engineer a digital solution that delivers real impact.",
+    url: "https://gijuhan.com/contact",
+    type: "website",
+    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630, alt: "Contact GIJUHAN" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@TheGijuhan",
+    creator: "@TheGijuhan",
+    title: "Contact GIJUHAN | Start Your Project",
+    description: "Big ideas deserve the right team. Tell us about your project and let's build something the world hasn't seen before.",
+    images: ["https://gijuhan.com/og-image.jpg"],
+  },
 };
 
 export default function ContactPage() {

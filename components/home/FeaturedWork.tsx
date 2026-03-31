@@ -28,7 +28,6 @@ export default function FeaturedWork() {
         <div className="mb-20">
           <FadeIn>
             <div className="flex items-center gap-4">
-              <span className="section-label">04 — Our Portfolio</span>
               <span className="w-16 h-[1px] bg-border"></span>
             </div>
           </FadeIn>
@@ -40,7 +39,7 @@ export default function FeaturedWork() {
               startDelay={0.1}
             />
             <FadeIn delay={0.3} direction="right">
-               <Button href="/work" variant="outline" size="lg" className="rounded-full">
+              <Button href="/work" variant="outline" size="lg" className="rounded-full">
                 See All Projects
               </Button>
             </FadeIn>
@@ -50,23 +49,23 @@ export default function FeaturedWork() {
         {/* Brutalist overlapping grid approach */}
         <div className="flex flex-col gap-12 lg:gap-32">
           {CASE_STUDIES.map((study, index) => {
-             const isHovered = hoveredIndex === index;
-             const isEven = index % 2 === 0;
-             
-             return (
+            const isHovered = hoveredIndex === index;
+            const isEven = index % 2 === 0;
+
+            return (
               <FadeIn key={study.slug} delay={0.1} direction="up">
-                <div 
+                <div
                   className={`group relative flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16 cursor-pointer`}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   {/* 3D Image Canvas */}
                   <div className={`relative w-full lg:w-[65%] aspect-[4/3] overflow-hidden bg-surface border border-border transition-colors duration-500 ${isHovered ? 'border-gold/50' : ''}`}>
-                    <ImageDistortion 
-                      imageUrl={generatePlaceholderTexture(index + 2)} 
-                      isHovered={isHovered} 
+                    <ImageDistortion
+                      imageUrl={generatePlaceholderTexture(index + 2)}
+                      isHovered={isHovered}
                     />
-                    
+
                     {/* Tags overlay */}
                     <div className="absolute top-6 left-6 right-6 z-10 pointer-events-none">
                       <div className="flex flex-wrap gap-2">
@@ -87,19 +86,19 @@ export default function FeaturedWork() {
                     <div className="flex items-center gap-4 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -translate-y-4 group-hover:translate-y-0">
                       <span className="text-gold font-bold font-[family-name:var(--font-syne)] tracking-widest uppercase text-xs">{study.stat}</span>
                     </div>
-                    
+
                     <h3 className="font-[family-name:var(--font-shippori)] text-4xl md:text-5xl font-bold text-text group-hover:text-gold transition-colors duration-500 leading-none mb-6">
                       {study.title}
                     </h3>
-                    
+
                     <p className="text-base text-muted leading-relaxed max-w-sm">
                       {study.description}
                     </p>
-                    
+
                     <div className="mt-8 overflow-hidden">
-                       <span className="inline-flex items-center gap-2 text-text font-bold uppercase tracking-widest text-xs translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                         View Case Study <ArrowDownRight size={16} className="text-gold"/>
-                       </span>
+                      <span className="inline-flex items-center gap-2 text-text font-bold uppercase tracking-widest text-xs translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        View Case Study <ArrowDownRight size={16} className="text-gold" />
+                      </span>
                     </div>
                   </div>
                 </div>
