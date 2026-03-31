@@ -20,15 +20,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const getMenuContent = () => {
+  const getMenuContent = (): Array<{ id: string; title: string; description: string; href: string; label: string }> => {
     if (activeMenu === "services") {
-      return SERVICES.map((service) => ({
+      const servicesList: Array<{ id: string; title: string; description: string; href: string; label: string }> = SERVICES.filter((service) => service.id !== "solutions").map((service) => ({
         id: service.id,
         title: service.title,
         description: service.description,
         href: service.href,
-        label: "Domain"
+        label: "SERVICE",
       }));
+
+      const serverManagement = SUB_SERVICES.support.find(s => s.slug === "server-domain-management");
+      if (serverManagement) {
+        servicesList.push({
+          id: serverManagement.slug,
+          title: serverManagement.title,
+          description: serverManagement.description,
+          href: `/services/support/${serverManagement.slug}`,
+          label: "SERVICE",
+        });
+      }
+
+      return servicesList;
     }
     if (activeMenu === "solutions") {
       return SUB_SERVICES.solutions.map((solution) => ({
@@ -36,7 +49,7 @@ export default function Navbar() {
         title: solution.title,
         description: solution.description,
         href: `/solutions/${solution.slug}`,
-        label: "Engineered Solution"
+        label: "SOLUTION",
       }));
     }
     return [];
@@ -45,11 +58,10 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled || activeMenu
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || activeMenu
             ? "bg-bg/80 backdrop-blur-xl border-b border-border"
             : "bg-transparent"
-        }`}
+          }`}
         onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -67,7 +79,7 @@ export default function Navbar() {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               {NAV_LINKS.map((link) => (
-                <div 
+                <div
                   key={link.href}
                   onMouseEnter={() => {
                     if (link.label === "Services") setActiveMenu("services");
@@ -117,8 +129,8 @@ export default function Navbar() {
               <div className="mx-auto max-w-7xl px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                   {getMenuContent().map((item) => (
-                    <Link 
-                      key={item.id} 
+                    <Link
+                      key={item.id}
                       href={item.href}
                       className="group relative flex flex-col p-6 border border-border/50 bg-bg/50 hover:border-gold/30 transition-all duration-500"
                       onClick={() => setActiveMenu(null)}
