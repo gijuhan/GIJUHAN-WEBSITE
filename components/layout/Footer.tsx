@@ -63,10 +63,10 @@ export default function Footer() {
             </ul>
             <div className="mt-8">
               <a
-                href="mailto:hello@gijuhan.com"
+                href="mailto:thegijuhan@gmail.com"
                 className="text-sm text-gold hover:text-accent transition-colors"
               >
-                hello@gijuhan.com
+                thegijuhan@gmail.com
               </a>
             </div>
           </div>
@@ -83,6 +83,9 @@ export default function Footer() {
             </Link>
             <Link href="#" className="hover:text-text transition-colors">
               Terms
+            </Link>
+            <Link href="/sitemap.xml" className="hover:text-text transition-colors">
+              Sitemap
             </Link>
           </div>
           <p className="text-xs text-muted/50 font-[family-name:var(--font-shippori)] italic">

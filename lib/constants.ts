@@ -234,9 +234,8 @@ export const MARQUEE_ITEMS = [
 
 export const SOCIAL_LINKS = [
   { label: "LinkedIn", href: "https://linkedin.com/company/gijuhan", icon: "Linkedin" },
-  { label: "Instagram", href: "https://instagram.com/gijuhan", icon: "Instagram" },
-  { label: "X / Twitter", href: "https://x.com/gijuhan", icon: "Twitter" },
-  { label: "GitHub", href: "https://github.com/gijuhan", icon: "Github" },
+  { label: "Instagram", href: "https://instagram.com/thegijuhan", icon: "Instagram" },
+  { label: "X / Twitter", href: "https://x.com/TheGijuhan", icon: "Twitter" },
 ] as const;
 
 export const BUDGET_OPTIONS = [
