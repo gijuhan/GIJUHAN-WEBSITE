@@ -6,6 +6,7 @@ import { CASE_STUDIES } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import { ArrowDownRight } from "lucide-react";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import RamenAnimation from "@/components/ui/RamenAnimation";
 
@@ -15,10 +16,7 @@ const ImageDistortion = dynamic(() => import("@/components/three/ImageDistortion
   loading: () => <div className="absolute inset-0 bg-surface animate-pulse" />
 });
 
-// Procedural abstract generator
-const generatePlaceholderTexture = (seed: number) => {
-  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800"><rect width="800" height="800" fill="%230A0A0A"/><circle cx="400" cy="400" r="${seed * 100 + 100}" fill="%23111111" opacity="0.8"/><path d="M0 0Q400 ${seed * 800} 800 0" stroke="%23C9A84C" stroke-width="4" fill="none" opacity="0.3"/></svg>`;
-};
+
 
 export default function WorkPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -98,10 +96,30 @@ export default function WorkPage() {
                     >
                       {/* Image Canvas */}
                       <div className={`relative w-full lg:w-[60%] aspect-video lg:aspect-[4/3] overflow-hidden structural-border bg-surface transition-all duration-700 ${isHovered && isCompleted ? 'border-gold scale-[1.02]' : ''}`}>
-                        <ImageDistortion 
-                          imageUrl={generatePlaceholderTexture(study.originalIndex + 5)} 
-                          isHovered={isHovered && isCompleted} 
-                        />
+                        {(study as any).video ? (
+                          <video
+                            src={(study as any).video}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover z-0"
+                          />
+                        ) : (
+                          <>
+                            <ImageDistortion 
+                              imageUrl={(study as any).image} 
+                              isHovered={isHovered && isCompleted} 
+                            />
+                            <Image
+                              src={(study as any).image}
+                              alt={study.title}
+                              fill
+                              className="object-cover opacity-80 z-0"
+                              sizes="(max-width: 768px) 100vw, 60vw"
+                            />
+                          </>
+                        )}
                         
                         {/* Tags */}
                         <div className="absolute top-6 left-6 right-6 z-10 pointer-events-none">

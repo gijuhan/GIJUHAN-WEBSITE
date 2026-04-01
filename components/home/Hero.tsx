@@ -24,6 +24,16 @@ export default function Hero() {
         <HeroOrb />
       </div>
 
+      {/* Hero Background Video */}
+      <video
+        src="https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/hero.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
+      />
+
       {/* Extreme Typography Layout */}
       <motion.div style={{ opacity }} className="relative z-10 w-full structural-grid max-w-[1600px] mx-auto pointer-events-none">
         <div className="col-span-12 flex flex-col gap-2">
