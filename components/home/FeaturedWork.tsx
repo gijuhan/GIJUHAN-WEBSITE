@@ -48,7 +48,7 @@ export default function FeaturedWork() {
 
         {/* Brutalist overlapping grid approach */}
         <div className="flex flex-col gap-12 lg:gap-32">
-          {CASE_STUDIES.map((study, index) => {
+          {CASE_STUDIES.filter(study => study.status === 'Completed').slice(0, 3).map((study, index) => {
             const isHovered = hoveredIndex === index;
             const isEven = index % 2 === 0;
 
