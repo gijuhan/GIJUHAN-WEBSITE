@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button";
 import dynamic from "next/dynamic";
 import { ArrowLeft, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const ImageDistortion = dynamic(() => import("@/components/three/ImageDistortion"), {
   ssr: false,
@@ -54,11 +55,22 @@ export default function WorkCaseStudy({
           
           {/* Abstract 3D Canvas Background mapped to this specific project */}
           <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
-            <ImageDistortion 
-               imageUrl={generateAbstractTexture(slug)} 
-               isHovered={true} // Auto-liquify abstractly
-               className="scale-125 saturate-150 rotate-[-15deg]"
-            />
+            {(project as any).video ? (
+              <video
+                src={(project as any).video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <ImageDistortion 
+                imageUrl={(project as any).image || generateAbstractTexture(slug)} 
+                isHovered={true}
+                className="scale-125 saturate-150 rotate-[-15deg]"
+              />
+            )}
           </div>
 
           <div className="container mx-auto px-6 lg:px-12 relative z-10 flex flex-col pb-20 pt-32">
@@ -68,12 +80,11 @@ export default function WorkCaseStudy({
               </Link>
             </FadeIn>
             
-            <StaggeredText
-              text={project.title}
-              tag="h1"
-              className="font-[family-name:var(--font-shippori)] text-massive font-bold text-text mix-blend-difference mb-8"
-              startDelay={0.1}
-            />
+            <FadeIn delay={0.1}>
+              <h1 className="font-[family-name:var(--font-shippori)] text-6xl md:text-7xl lg:text-[9rem] xl:text-[10rem] font-bold text-text mix-blend-difference mb-8 leading-[0.85] tracking-tighter w-full">
+                {project.title}
+              </h1>
+            </FadeIn>
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end w-full border-t border-border pt-12">
                <div className="lg:col-span-8 flex flex-wrap gap-4">
@@ -149,12 +160,19 @@ export default function WorkCaseStudy({
                         </div>
                     </FadeIn>
 
-                    {/* Placeholder Full Width Visual */}
-                    <FadeIn direction="up" className="w-full aspect-[16/9] structural-border bg-bg relative overflow-hidden flex items-center justify-center">
-                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(var(--color-gold) 1px, transparent 1px), linear-gradient(90deg, var(--color-gold) 1px, transparent 1px)", backgroundSize: "4rem 4rem" }} />
-                        <span className="font-[family-name:var(--font-syne)] text-[10px] tracking-[0.3em] uppercase text-muted">Abstract Visual Layouts</span>
-                        <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50">SCREEN_01</div>
-                    </FadeIn>
+                    {/* Full Width Visual */}
+                    {!(project as any).hideGallery && (
+                        <FadeIn direction="up" className="w-full aspect-[16/9] structural-border bg-bg relative overflow-hidden flex items-center justify-center group">
+                            <Image
+                                src={(project as any).gallery?.[0] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-1.jpg`}
+                                alt={`${project.title} - Visual 1`}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                sizes="(max-width: 1200px) 100vw, 80vw"
+                            />
+                            <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_01</div>
+                        </FadeIn>
+                    )}
 
                     <FadeIn direction="up">
                         <h2 className="font-[family-name:var(--font-shippori)] text-4xl md:text-5xl lg:text-6xl font-bold text-text mb-8 tracking-tighter">
@@ -168,14 +186,30 @@ export default function WorkCaseStudy({
                     </FadeIn>
 
                     {/* Two Column Visuals */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                       <FadeIn direction="up" className="w-full aspect-square structural-border bg-bg relative flex items-center justify-center">
-                           <span className="font-[family-name:var(--font-syne)] text-[10px] tracking-[0.3em] uppercase text-muted">Component Library</span>
-                       </FadeIn>
-                       <FadeIn direction="up" delay={0.2} className="w-full aspect-square structural-border bg-bg relative flex items-center justify-center">
-                           <span className="font-[family-name:var(--font-syne)] text-[10px] tracking-[0.3em] uppercase text-muted">Design System</span>
-                       </FadeIn>
-                    </div>
+                    {!(project as any).hideGallery && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                           <FadeIn direction="up" className="w-full aspect-square structural-border bg-bg relative flex items-center justify-center overflow-hidden group">
+                               <Image
+                                   src={(project as any).gallery?.[1] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-2.jpg`}
+                                   alt={`${project.title} - Visual 2`}
+                                   fill
+                                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                   sizes="(max-width: 768px) 100vw, 40vw"
+                               />
+                               <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_02</div>
+                           </FadeIn>
+                           <FadeIn direction="up" delay={0.2} className="w-full aspect-square structural-border bg-bg relative flex items-center justify-center overflow-hidden group">
+                               <Image
+                                   src={(project as any).gallery?.[2] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-3.jpg`}
+                                   alt={`${project.title} - Visual 3`}
+                                   fill
+                                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                   sizes="(max-width: 768px) 100vw, 40vw"
+                               />
+                               <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_03</div>
+                           </FadeIn>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

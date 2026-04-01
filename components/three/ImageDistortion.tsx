@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, Suspense, Component, type ReactNode } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -93,6 +93,28 @@ function Scene({ imageUrl, isHovered }: { imageUrl: string; isHovered: boolean }
   );
 }
 
+// Error boundary to catch Three.js texture load failures
+class CanvasErrorBoundary extends Component<
+  { children: ReactNode; fallback?: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallback?: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback ?? null;
+    }
+    return this.props.children;
+  }
+}
+
 interface ImageDistortionProps {
   imageUrl: string;
   alt?: string;
@@ -108,14 +130,18 @@ export default function ImageDistortion({
   // We use fallback background color while 3D is initializing or if WebGL fails
   return (
     <div className={`relative overflow-hidden w-full h-full bg-surface ${className}`}>
-      <Canvas
-        camera={{ position: [0, 0, 1], fov: 75 }}
-        gl={{ alpha: true, antialias: false }} // antialias not strictly needed for 2D plane
-        dpr={[1, 2]} // Support high-DPI displays
-        style={{ width: "100%", height: "100%" }}
-      >
-        <Scene imageUrl={imageUrl} isHovered={isHovered} />
-      </Canvas>
+      <CanvasErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 0, 1], fov: 75 }}
+          gl={{ alpha: true, antialias: false }}
+          dpr={[1, 2]}
+          style={{ width: "100%", height: "100%" }}
+        >
+          <Suspense fallback={null}>
+            <Scene imageUrl={imageUrl} isHovered={isHovered} />
+          </Suspense>
+        </Canvas>
+      </CanvasErrorBoundary>
     </div>
   );
 }
