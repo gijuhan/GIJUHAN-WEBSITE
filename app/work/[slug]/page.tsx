@@ -38,6 +38,14 @@ export default function WorkCaseStudy({
 
   return (
     <>
+      {project.status === 'In Progress' && (
+        <div className="fixed top-0 left-0 w-full bg-bg/80 backdrop-blur-md border-b border-border/50 z-50 py-3 text-center transition-all">
+          <span className="font-[family-name:var(--font-syne)] text-[9px] tracking-[0.3em] uppercase text-gold">
+            This project is currently in development. Check back soon.
+          </span>
+        </div>
+      )}
+      
       {/* 1. Massive Sticky Hero + WebGL Abstract Art */}
       <section className="relative h-[120svh] overflow-hidden">
         
@@ -111,16 +119,21 @@ export default function WorkCaseStudy({
                        <FadeIn delay={0.2}>
                            <span className="text-gold font-[family-name:var(--font-syne)] text-[10px] tracking-[0.3em] uppercase block mb-4 border-b border-border/50 pb-2">Services Rendered</span>
                            <div className="flex flex-col gap-2 mt-4 text-muted">
-                              <span>Brand Identity</span>
-                              <span>Digital Strategy</span>
-                              <span>Web Engineering</span>
-                              <span>Campaign Analytics</span>
+                              {project.services?.map((service: string, i: number) => (
+                                <span key={i}>{service}</span>
+                              ))}
                            </div>
                        </FadeIn>
                         <FadeIn delay={0.3}>
-                           <Button href="#" variant="outline" size="lg" className="w-full justify-between items-center group">
-                             Visit Website <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                           </Button>
+                           {project.status === 'Completed' && project.website.startsWith('http') ? (
+                             <Button href={project.website} variant="outline" size="lg" className="w-full justify-between items-center group">
+                               Visit Website <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                             </Button>
+                           ) : (
+                             <Button disabled={true} variant="outline" size="lg" className="w-full justify-between items-center opacity-50 cursor-not-allowed hover:bg-transparent hover:text-text">
+                               In Development <span className="w-1.5 h-1.5 rounded-full bg-gold/50 ml-auto animate-pulse"></span>
+                             </Button>
+                           )}
                        </FadeIn>
                     </div>
                 </div>
@@ -132,7 +145,7 @@ export default function WorkCaseStudy({
                             The Challenge
                         </h2>
                         <div className="text-xl md:text-2xl text-muted leading-relaxed font-[family-name:var(--font-syne)] border-l-2 border-gold pl-6">
-                            {project.description}
+                            {project.challenge}
                         </div>
                     </FadeIn>
 
@@ -149,12 +162,7 @@ export default function WorkCaseStudy({
                         </h2>
                         <div className="text-xl text-muted leading-relaxed space-y-6">
                             <p>
-                                Applying the principle of Kanso (簡素), we stripped back the unnecessary bloat from their legacy infrastructure. 
-                                We mapped out a fiercely minimal user journey, eliminating friction at every intersection while maximizing brand aesthetic.
-                            </p>
-                            <p>
-                                Operating completely outside standard templates, we engineered a custom Next.js front-end intertwined with bespoke 
-                                WebGL interactions, ensuring the interface not only functioned flawlessly but conveyed absolute authority in their sector.
+                                {project.solution}
                             </p>
                         </div>
                     </FadeIn>
