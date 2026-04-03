@@ -51,17 +51,6 @@ export default function WorkCaseStudy({
           
           {/* Abstract 3D Canvas Background mapped to this specific project */}
           <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
-            {(project as any).video ? (
-              <video
-                src={(project as any).video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : (
               <Image
                 src={(project as any).image || generateAbstractTexture(slug)}
                 alt={`${project.title} background`}
@@ -71,7 +60,6 @@ export default function WorkCaseStudy({
                 priority={false}
                 loading="eager"
               />
-            )}
           </div>
 
           <div className="container mx-auto px-6 lg:px-12 relative z-10 flex flex-col pb-20 pt-32">
