@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import { StaggeredText, FadeIn } from "@/components/ui/AnimatedText";
@@ -11,6 +12,32 @@ const HeroOrb = dynamic(() => import("@/components/three/HeroOrb"), {
 
 export default function Hero() {
   const { scrollY } = useScroll();
+  const [showOrb, setShowOrb] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+
+  // Defer HeroOrb and video loading until after LCP
+  useEffect(() => {
+    // Only show orb on desktop
+    if (window.innerWidth < 768) return;
+
+    // Load after idle
+    if ("requestIdleCallback" in window) {
+      const id = (window as any).requestIdleCallback(
+        () => {
+          setShowOrb(true);
+          setShowVideo(true);
+        },
+        { timeout: 3000 }
+      );
+      return () => (window as any).cancelIdleCallback(id);
+    } else {
+      const timer = setTimeout(() => {
+        setShowOrb(true);
+        setShowVideo(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   // Parallax effects for extreme typography
   const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
@@ -19,20 +46,25 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[100svh] flex items-center pt-20 overflow-hidden px-4 lg:px-8">
-      {/* 3D Orb Background - Pushed deeper back and larger to fill the screen */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vh] md:w-[120vw] md:h-[130vh] opacity-[0.9] z-0 pointer-events-auto mix-blend-screen">
-        <HeroOrb />
-      </div>
+      {/* 3D Orb Background - Deferred loading */}
+      {showOrb && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vh] md:w-[120vw] md:h-[130vh] opacity-[0.9] z-0 pointer-events-auto mix-blend-screen">
+          <HeroOrb />
+        </div>
+      )}
 
-      {/* Hero Background Video */}
-      <video
-        src="https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/hero.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
-      />
+      {/* Hero Background Video — deferred, preload=none */}
+      {showVideo && (
+        <video
+          src="https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
+        />
+      )}
 
       {/* Extreme Typography Layout */}
       <motion.div style={{ opacity }} className="relative z-10 w-full structural-grid max-w-[1600px] mx-auto pointer-events-none">

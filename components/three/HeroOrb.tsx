@@ -127,7 +127,7 @@ function Orb() {
 
   return (
     <mesh ref={meshRef}>
-      <sphereGeometry args={[2, 64, 64]} />
+      <sphereGeometry args={[2, 32, 32]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
@@ -183,7 +183,7 @@ function Planet({ service, radius, angle, speed, color, inclination, tilt }: any
     <group rotation={[inclination, 0, tilt]}>
       {/* Orbit Ring */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[radius, 0.003, 64, 100]} />
+        <torusGeometry args={[radius, 0.003, 16, 64]} />
         <meshBasicMaterial color={color} transparent opacity={hovered ? 0.8 : 0.15} />
       </mesh>
 
@@ -205,7 +205,7 @@ function Planet({ service, radius, angle, speed, color, inclination, tilt }: any
             router.push(service.href);
           }}
         >
-          <sphereGeometry args={[0.15, 32, 32]} />
+          <sphereGeometry args={[0.15, 16, 16]} />
           <meshStandardMaterial 
             color={hovered ? "#ffffff" : color} 
             emissive={hovered ? color : "#000000"}
@@ -267,7 +267,7 @@ export default function HeroOrb() {
     <div className="w-full h-full min-h-[400px]">
       <Canvas
         camera={{ position: [0, 2.5, 7.5], fov: 50 }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         className="!absolute inset-0 cursor-grab active:cursor-grabbing"
       >
         <OrbitControls 

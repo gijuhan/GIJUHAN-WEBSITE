@@ -2,17 +2,24 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import * as Icons from "lucide-react";
-import { ArrowUpRight } from "lucide-react";
+import {
+  Database,
+  Brain,
+  Layers,
+  GitBranch,
+  BarChart3,
+  HelpCircle,
+  ArrowUpRight,
+} from "lucide-react";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import Link from "next/link";
 
 const solutionsIconMap: Record<string, any> = {
-  Database: Icons.Database,
-  Brain: Icons.Brain,
-  Layers: Icons.Layers,
-  GitBranch: Icons.GitBranch,
-  BarChart3: Icons.BarChart3,
+  Database,
+  Brain,
+  Layers,
+  GitBranch,
+  BarChart3,
 };
 
 const solutionItems = [
@@ -56,7 +63,7 @@ const solutionItems = [
 const SolutionCard = ({ item, index }: { item: typeof solutionItems[0], index: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const Icon = solutionsIconMap[item.icon] || Icons.HelpCircle;
+  const Icon = solutionsIconMap[item.icon] || HelpCircle;
 
   return (
     <motion.div

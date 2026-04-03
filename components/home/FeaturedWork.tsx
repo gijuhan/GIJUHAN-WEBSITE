@@ -1,20 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { CASE_STUDIES } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import Button from "@/components/ui/Button";
 import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
-
-// Import R3F distortion component dynamically to save initial load
-const ImageDistortion = dynamic(() => import("@/components/three/ImageDistortion"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-surface animate-pulse" />
-});
-
-
 
 export default function FeaturedWork() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -56,7 +47,7 @@ export default function FeaturedWork() {
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  {/* 3D Image Canvas */}
+                  {/* Image — CSS effects replace Three.js ImageDistortion */}
                   <div className={`relative w-full lg:w-[65%] aspect-[4/3] overflow-hidden bg-surface border border-border transition-colors duration-500 ${isHovered ? 'border-gold/50' : ''}`}>
                     {(study as any).video ? (
                       <video
@@ -65,23 +56,34 @@ export default function FeaturedWork() {
                         muted
                         loop
                         playsInline
+                        preload="metadata"
                         className="absolute inset-0 w-full h-full object-cover z-0"
                       />
                     ) : (
-                      <>
-                        <ImageDistortion
-                          imageUrl={(study as any).image}
-                          isHovered={isHovered}
-                        />
-                        <Image
-                          src={(study as any).image}
-                          alt={study.title}
-                          fill
-                          className="object-cover opacity-80 z-0"
-                          sizes="(max-width: 768px) 100vw, 65vw"
-                        />
-                      </>
+                      <Image
+                        src={(study as any).image}
+                        alt={study.title}
+                        fill
+                        className={`object-cover z-0 transition-all duration-700 ${
+                          isHovered
+                            ? 'scale-105 brightness-110 saturate-[1.2]'
+                            : 'scale-100 brightness-[0.8] saturate-100'
+                        }`}
+                        sizes="(max-width: 768px) 100vw, 65vw"
+                        loading="lazy"
+                      />
                     )}
+
+                    {/* Hover color overlay — replaces Three.js chromatic aberration */}
+                    <div
+                      className={`absolute inset-0 z-[1] pointer-events-none transition-opacity duration-700 ${
+                        isHovered ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(230,57,70,0.08) 0%, rgba(201,168,76,0.12) 100%)',
+                        mixBlendMode: 'overlay',
+                      }}
+                    />
 
                     {/* Tags overlay */}
                     <div className="absolute top-6 left-6 right-6 z-10 pointer-events-none">

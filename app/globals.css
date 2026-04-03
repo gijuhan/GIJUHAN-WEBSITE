@@ -74,7 +74,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth removed — causes forced reflow, use JS smooth scroll instead */
 }
 
 body {
@@ -90,7 +90,7 @@ body {
   color: var(--color-white);
 }
 
-/* Grain Overlay */
+/* Grain Overlay — hidden on mobile for performance */
 .grain-overlay {
   position: fixed;
   inset: 0;
@@ -98,6 +98,13 @@ body {
   pointer-events: none;
   opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  will-change: auto;
+}
+
+@media (max-width: 768px) {
+  .grain-overlay {
+    display: none;
+  }
 }
 
 /* Section label style */
@@ -143,9 +150,11 @@ h1, h2, h3, h4, .text-brutalist {
   gap: 1.5rem;
 }
 
-/* Ensure no elements overlap the custom cursor */
-a, button, [role="button"] {
-  cursor: none !important;
+/* Custom cursor styling — only on devices with fine pointer (not mobile) */
+@media (pointer: fine) {
+  a, button, [role="button"] {
+    cursor: none !important;
+  }
 }
 
 

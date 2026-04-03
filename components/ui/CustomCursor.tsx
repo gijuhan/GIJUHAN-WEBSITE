@@ -1,93 +1,96 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useCallback } from "react";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const ringPos = useRef({ x: 0, y: 0 });
+  const isHovering = useRef(false);
+  const isVisible = useRef(false);
+  const rafId = useRef<number>(0);
+
+  const animate = useCallback(() => {
+    if (!dotRef.current || !ringRef.current) return;
+
+    // Smooth ring follow
+    ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.15;
+    ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.15;
+
+    // Direct DOM manipulation — no React re-renders
+    dotRef.current.style.transform = `translate3d(${mousePos.current.x - 8}px, ${mousePos.current.y - 8}px, 0) scale(${isHovering.current ? 0 : 1})`;
+    ringRef.current.style.transform = `translate3d(${ringPos.current.x - 24}px, ${ringPos.current.y - 24}px, 0) scale(${isHovering.current ? 1.5 : 1})`;
+    ringRef.current.style.backgroundColor = isHovering.current
+      ? "rgba(201, 168, 76, 0.1)"
+      : "rgba(0,0,0,0)";
+
+    rafId.current = requestAnimationFrame(animate);
+  }, []);
 
   useEffect(() => {
     // Only show custom cursor on desktop devices that support hover
     if (window.matchMedia("(pointer: coarse)").matches) return;
-    
-    setIsVisible(true);
+    if (!dotRef.current || !ringRef.current) return;
+
+    isVisible.current = true;
+    dotRef.current.style.opacity = "1";
+    ringRef.current.style.opacity = "1";
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mousePos.current.x = e.clientX;
+      mousePos.current.y = e.clientY;
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      // Check if hovering over links, buttons, or interactive elements
-      const isInteractive = 
-        target.tagName.toLowerCase() === 'a' ||
-        target.tagName.toLowerCase() === 'button' ||
-        target.closest('a') !== null ||
-        target.closest('button') !== null ||
-        target.classList.contains('cursor-pointer') ||
-        target.closest('.group') !== null;
-        
-      setIsHovering(isInteractive);
+      isHovering.current =
+        target.tagName.toLowerCase() === "a" ||
+        target.tagName.toLowerCase() === "button" ||
+        target.closest("a") !== null ||
+        target.closest("button") !== null ||
+        target.classList.contains("cursor-pointer") ||
+        target.closest(".group") !== null;
     };
 
-    // Hide cursor when leaving window
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseLeave = () => {
+      if (dotRef.current) dotRef.current.style.opacity = "0";
+      if (ringRef.current) ringRef.current.style.opacity = "0";
+    };
+    const handleMouseEnter = () => {
+      if (dotRef.current) dotRef.current.style.opacity = "1";
+      if (ringRef.current) ringRef.current.style.opacity = "1";
+    };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", updateMousePosition, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseenter", handleMouseEnter);
+
+    // Start animation loop
+    rafId.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
       window.removeEventListener("mouseover", handleMouseOver);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
+      cancelAnimationFrame(rafId.current);
     };
-  }, []);
-
-  if (!isVisible) return null;
+  }, [animate]);
 
   return (
     <>
-      <motion.div
+      <div
+        ref={dotRef}
         className="fixed top-0 left-0 w-4 h-4 rounded-full bg-gold pointer-events-none z-[9999] mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 8,
-          y: mousePosition.y - 8,
-          scale: isHovering ? 0 : 1,
-          opacity: 1
-        }}
-        transition={{
-          type: "tween",
-          ease: "backOut",
-          duration: 0.15
-        }}
+        style={{ opacity: 0, willChange: "transform" }}
       />
-      <motion.div
-        className="fixed top-0 left-0 w-12 h-12 rounded-full border border-gold/50 pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
-        animate={{
-          x: mousePosition.x - 24,
-          y: mousePosition.y - 24,
-          scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? "rgba(201, 168, 76, 0.1)" : "rgba(0,0,0,0)"
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 150,
-          damping: 15,
-          mass: 0.5
-        }}
-      >
-        {isHovering && (
-           <span className="text-[8px] text-gold font-[family-name:var(--font-syne)] uppercase tracking-widest opacity-80">
-             Explore
-           </span>
-        )}
-      </motion.div>
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 w-12 h-12 rounded-full border border-gold/50 pointer-events-none z-[9998] mix-blend-difference"
+        style={{ opacity: 0, willChange: "transform", transition: "background-color 0.2s ease" }}
+      />
     </>
   );
 }
