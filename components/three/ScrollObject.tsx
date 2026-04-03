@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { TorusKnot, Wireframe, Float } from "@react-three/drei";
+import { TorusKnot, Float } from "@react-three/drei";
 import * as THREE from "three";
 import { useScroll, useSpring } from "framer-motion";
 
@@ -26,7 +26,7 @@ function Scene() {
       targetPointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       targetPointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
-    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
     return () => window.removeEventListener("pointermove", handlePointerMove);
   }, []);
 
@@ -56,7 +56,7 @@ function Scene() {
 
   return (
     <Float speed={2} rotationIntensity={1.5} floatIntensity={3}>
-      <TorusKnot ref={meshRef as any} args={[2.5, 0.6, 256, 32, 3, 4]}>
+      <TorusKnot ref={meshRef as any} args={[2.5, 0.6, 128, 16, 3, 4]}>
         <meshStandardMaterial
           ref={materialRef}
           color="#E63946"
@@ -74,7 +74,7 @@ function Scene() {
 export default function ScrollObject() {
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-[-1] opacity-100 mix-blend-screen mix-blend-overlay mix-blend-lighten">
-      <Canvas camera={{ position: [0, 0, 10], fov: 50 }} dpr={[1, 2]}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 50 }} dpr={[1, 1.5]}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#C9A84C" />
