@@ -11,10 +11,6 @@ import { ArrowLeft, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-const ImageDistortion = dynamic(() => import("@/components/three/ImageDistortion"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-surface animate-pulse" />
-});
 
 // Dynamic Abstract Texture for Hero
 const generateAbstractTexture = (slug: string) => {
@@ -62,13 +58,18 @@ export default function WorkCaseStudy({
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             ) : (
-              <ImageDistortion 
-                imageUrl={(project as any).image || generateAbstractTexture(slug)} 
-                isHovered={true}
-                className="scale-125 saturate-150 rotate-[-15deg]"
+              <Image
+                src={(project as any).image || generateAbstractTexture(slug)}
+                alt={`${project.title} background`}
+                fill
+                className="object-cover scale-125 saturate-150 -rotate-[15deg] brightness-75"
+                sizes="100vw"
+                priority={false}
+                loading="eager"
               />
             )}
           </div>
@@ -169,6 +170,7 @@ export default function WorkCaseStudy({
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 sizes="(max-width: 1200px) 100vw, 80vw"
+                                loading="lazy"
                             />
                             <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_01</div>
                         </FadeIn>
@@ -195,6 +197,7 @@ export default function WorkCaseStudy({
                                    fill
                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                                    sizes="(max-width: 768px) 100vw, 40vw"
+                                   loading="lazy"
                                />
                                <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_02</div>
                            </FadeIn>

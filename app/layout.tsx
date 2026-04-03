@@ -136,6 +136,9 @@ export default function RootLayout({
             }),
           }}
         />
+        {/* ── Preconnect & DNS Prefetch for critical origins ── */}
+        <link rel="preconnect" href="https://3ogl08hjksjgbrka.public.blob.vercel-storage.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body className="min-h-full flex flex-col">
         <noscript>
@@ -153,7 +156,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        <Script id="google-tag-manager" strategy="lazyOnload">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

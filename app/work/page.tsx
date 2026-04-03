@@ -7,16 +7,7 @@ import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import RamenAnimation from "@/components/ui/RamenAnimation";
-
-// Dynamic WebGL distortion background for hover states
-const ImageDistortion = dynamic(() => import("@/components/three/ImageDistortion"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-surface animate-pulse" />
-});
-
-
 
 export default function WorkPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -94,7 +85,7 @@ export default function WorkPage() {
                       onMouseEnter={() => setHoveredIndex(study.originalIndex)}
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
-                      {/* Image Canvas */}
+                      {/* Image — CSS effects replace Three.js ImageDistortion */}
                       <div className={`relative w-full lg:w-[60%] aspect-video lg:aspect-[4/3] overflow-hidden structural-border bg-surface transition-all duration-700 ${isHovered && isCompleted ? 'border-gold scale-[1.02]' : ''}`}>
                         {(study as any).video ? (
                           <video
@@ -103,20 +94,32 @@ export default function WorkPage() {
                             muted
                             loop
                             playsInline
+                            preload="metadata"
                             className="absolute inset-0 w-full h-full object-cover z-0"
                           />
                         ) : (
                           <>
-                            <ImageDistortion 
-                              imageUrl={(study as any).image} 
-                              isHovered={isHovered && isCompleted} 
-                            />
                             <Image
                               src={(study as any).image}
                               alt={study.title}
                               fill
-                              className="object-cover opacity-80 z-0"
+                              className={`object-cover z-0 transition-all duration-700 ${
+                                isHovered && isCompleted
+                                  ? 'scale-105 brightness-110 saturate-[1.2]'
+                                  : 'scale-100 brightness-[0.8] saturate-100'
+                              }`}
                               sizes="(max-width: 768px) 100vw, 60vw"
+                              loading="lazy"
+                            />
+                            {/* Hover color overlay (CSS replacement for Three.js) */}
+                            <div
+                              className={`absolute inset-0 z-[1] pointer-events-none transition-opacity duration-700 ${
+                                isHovered && isCompleted ? 'opacity-100' : 'opacity-0'
+                              }`}
+                              style={{
+                                background: 'linear-gradient(135deg, rgba(230,57,70,0.08) 0%, rgba(201,168,76,0.12) 100%)',
+                                mixBlendMode: 'overlay',
+                              }}
                             />
                           </>
                         )}

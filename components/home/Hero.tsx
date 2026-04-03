@@ -90,6 +90,7 @@ export default function Hero() {
             className="text-massive leading-[0.9] text-text mix-blend-difference relative z-10"
             staggerDelay={0.08}
             startDelay={0.3}
+            isLCP={true}
           />
 
           <motion.div style={{ y: y2 }} className="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-6 lg:mt-2 relative z-20">
