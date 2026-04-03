@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 
 interface AnimatedTextProps {
@@ -42,6 +42,8 @@ interface StaggeredTextProps {
   tag?: "h1" | "h2" | "h3" | "p" | "span";
   staggerDelay?: number;
   startDelay?: number;
+  /** If true, text renders immediately visible (no animation on initial paint) — use for LCP elements */
+  isLCP?: boolean;
 }
 
 export function StaggeredText({
@@ -50,10 +52,38 @@ export function StaggeredText({
   tag: Tag = "h2",
   staggerDelay = 0.1,
   startDelay = 0,
+  isLCP = false,
 }: StaggeredTextProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const words = text.split("\n");
+
+  // For LCP elements: render text immediately visible in the DOM
+  // The animation still plays, but the initial state is visible (opacity: 1)
+  // This ensures Lighthouse sees the text painted immediately
+  if (isLCP) {
+    return (
+      <div ref={ref}>
+        <Tag className={className}>
+          {words.map((line, i) => (
+            <span key={i} className="block w-fit whitespace-nowrap overflow-hidden pb-6 -mb-6 pr-8 -mr-8 pt-4 -mt-4">
+              <motion.span
+                className="block"
+                initial={{ y: 0, opacity: 1 }}
+                animate={
+                  isInView
+                    ? { y: 0, opacity: 1 }
+                    : { y: 0, opacity: 1 }
+                }
+              >
+                {line}
+              </motion.span>
+            </span>
+          ))}
+        </Tag>
+      </div>
+    );
+  }
 
   return (
     <div ref={ref}>

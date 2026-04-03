@@ -12,11 +12,6 @@ import { ArrowDownRight, Layers, Lightbulb, Rocket } from "lucide-react";
 import Marquee from "react-fast-marquee";
 import React from "react";
 
-// WebGL dynamic import for abstract digital art
-const ImageDistortion = dynamic(() => import("@/components/three/ImageDistortion"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-surface animate-pulse" />
-});
 
 // Seed-based abstract SVG generator for WebGL distortion base
 const generateAbstractTexture = (slug: string) => {
@@ -87,10 +82,12 @@ export default function ServicePage({ params }: { params: Params }) {
 
           {/* Abstract 3D Canvas Background mapped to this specific service */}
           <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
-            <ImageDistortion
-              imageUrl={generateAbstractTexture(slug)}
-              isHovered={true} // Auto-liquify abstractly
-              className="scale-125 saturate-150 rotate-12"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={generateAbstractTexture(slug)}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover scale-125 saturate-150 rotate-12 brightness-75"
             />
           </div>
 
