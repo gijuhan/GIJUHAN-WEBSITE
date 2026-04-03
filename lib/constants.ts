@@ -120,7 +120,7 @@ export const CASE_STUDIES = [
     description:
       "Full Shopify storefront for a Delhi NCR health-food cloud kitchen.",
     stat: "Health-Tech Cloud Kitchen Platform",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/lettuce%20eat.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/le1.png",
     gallery: [
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/le1.png",
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/le2.png",
@@ -139,7 +139,7 @@ export const CASE_STUDIES = [
     tags: ["Shopify", "Branding", "E-Commerce"],
     description: "Elegant Shopify build for a premium Indian fashion label.",
     stat: "Premium D2C Fashion Store",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/Chandani%20%26%20Priyanka.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/C%26P1.png",
     gallery: [
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/C%26P1.png",
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/c%26p2.png",
@@ -158,7 +158,7 @@ export const CASE_STUDIES = [
     tags: ["WordPress", "Corporate", "SEO"],
     description: "Corporate WordPress website engineered for B2B outreach and lead capture.",
     stat: "B2B Lead Generation Website",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/rvsolutions.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/rv1.jpg",
     gallery: [
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/rv2.jpg",
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/rv3.jpg",
@@ -177,7 +177,7 @@ export const CASE_STUDIES = [
     tags: ["WordPress", "Industrial", "Web Engineering"],
     description: "WordPress site for an engineering services firm targeting industrial clients.",
     stat: "Industrial Services Web Presence",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/g-artengineering.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/ge1%60.png",
     gallery: [
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/ge1%60.png",
       "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/ge2.jpg",
@@ -196,7 +196,7 @@ export const CASE_STUDIES = [
     tags: ["Next.js", "SaaS", "Sports Tech", "Full Stack"],
     description: "Sports player analytics portal with multi-layer authentication for coaches, players & admins.",
     stat: "Multi-Role Sports Analytics Platform",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/DC1.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/brandwave.jpg",
     status: "In Progress",
     services: ["Next.js Development", "Multi-Role Auth System", "Sports Analytics UX", "Full Stack Engineering", "Dashboard Architecture"],
     website: "[Internal Platform — Not Public]",
@@ -238,7 +238,7 @@ export const CASE_STUDIES = [
     tags: ["Next.js", "AI", "Full Stack", "SaaS"],
     description: "First-of-its-kind AI mock interview platform with live voice questions, camera recording & Stripe payments.",
     stat: "AI-Powered Interview Prep Platform",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/AI%20Interview.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/eleganica.jpg",
     hideGallery: true,
     status: "Completed",
     services: ["Next.js Development", "Gemini AI Integration", "Clerk Auth", "Drizzle + PostgreSQL", "Stripe Payments", "Camera/Mic API"],
@@ -253,7 +253,7 @@ export const CASE_STUDIES = [
     tags: ["AI Automation", "Python", "OpenAI", "Chatbot"],
     description: "Custom PDF-trained AI chatbot deployed for a global petrochemicals congress event.",
     stat: "Event-Specific AI ChatBot",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/AI%20CHAT%20BOT.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/brandwave.jpg",
     hideGallery: true,
     status: "Completed",
     services: ["AI Automation", "Python Backend", "OpenAI Integration", "Custom PDF Training", "HTML/CSS Frontend", "Render Deployment"],

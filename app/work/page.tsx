@@ -87,18 +87,6 @@ export default function WorkPage() {
                     >
                       {/* Image — CSS effects replace Three.js ImageDistortion */}
                       <div className={`relative w-full lg:w-[60%] aspect-video lg:aspect-[4/3] overflow-hidden structural-border bg-surface transition-all duration-700 ${isHovered && isCompleted ? 'border-gold scale-[1.02]' : ''}`}>
-                        {(study as any).video ? (
-                          <video
-                            src={(study as any).video}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            preload="metadata"
-                            className="absolute inset-0 w-full h-full object-cover z-0"
-                          />
-                        ) : (
-                          <>
                             <Image
                               src={(study as any).image}
                               alt={study.title}
@@ -121,8 +109,6 @@ export default function WorkPage() {
                                 mixBlendMode: 'overlay',
                               }}
                             />
-                          </>
-                        )}
                         
                         {/* Tags */}
                         <div className="absolute top-6 left-6 right-6 z-10 pointer-events-none">

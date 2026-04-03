@@ -49,17 +49,6 @@ export default function FeaturedWork() {
                 >
                   {/* Image — CSS effects replace Three.js ImageDistortion */}
                   <div className={`relative w-full lg:w-[65%] aspect-[4/3] overflow-hidden bg-surface border border-border transition-colors duration-500 ${isHovered ? 'border-gold/50' : ''}`}>
-                    {(study as any).video ? (
-                      <video
-                        src={(study as any).video}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        className="absolute inset-0 w-full h-full object-cover z-0"
-                      />
-                    ) : (
                       <Image
                         src={(study as any).image}
                         alt={study.title}
@@ -72,7 +61,6 @@ export default function FeaturedWork() {
                         sizes="(max-width: 768px) 100vw, 65vw"
                         loading="lazy"
                       />
-                    )}
 
                     {/* Hover color overlay — replaces Three.js chromatic aberration */}
                     <div
