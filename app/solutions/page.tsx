@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import SolutionsExperience from "@/components/solutions/SolutionsExperience";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl, buildBreadcrumbSchema } from "@/lib/seo";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Enterprise AI & Data Solutions — Automation, ETL & BI | GIJUHAN",
   description: "GIJUHAN engineers intelligent data pipelines, AI automation agents, ETL/ELT systems, CI/CD infrastructure, and advanced BI dashboards for enterprise-scale growth.",
   keywords: ["AI automation solutions","enterprise data solutions","ETL pipeline development","ELT data engineering","CI/CD pipeline agency","data migration services","business intelligence dashboard","AI agent development","LLM integration services","predictive analytics agency","DevOps automation","data architecture agency","machine learning solutions","data pipeline engineering","AI workflow automation"],
@@ -25,5 +27,15 @@ export const metadata = {
 };
 
 export default function SolutionsPage() {
-  return <SolutionsExperience />;
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", item: absoluteUrl("/") },
+    { name: "Solutions", item: absoluteUrl("/solutions") },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema} id="solutions-breadcrumb-schema" />
+      <SolutionsExperience />
+    </>
+  );
 }

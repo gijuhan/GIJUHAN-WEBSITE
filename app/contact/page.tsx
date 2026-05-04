@@ -2,24 +2,32 @@ import type { Metadata } from "next";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactForm from "@/components/contact/ContactForm";
 import { Mail, MapPin, Globe, Clock } from "lucide-react";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl, buildBreadcrumbSchema } from "@/lib/seo";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Start a Project | Contact GIJUHAN — AI & Digital Agency",
-  description: "Ready to build something remarkable? Contact GIJUHAN to start your next web design, development, marketing, or AI automation project. Based in Pune, India. Serving globally.",
-  keywords: ["contact digital agency","hire web design agency","start a web project","digital agency Pune India","get a quote digital agency","hire AI agency","web development inquiry","marketing agency contact","work with GIJUHAN","digital project inquiry","agency consultation","global digital agency contact","hire full stack developer","brand project inquiry","AI solution consultation"],
+  description:
+    "Ready to build something remarkable? Contact GIJUHAN to start your next web design, development, marketing, or AI automation project. Based in Delhi, India. Serving globally.",
+  keywords: [
+    "contact digital agency Delhi",
+    "hire web design agency India",
+    "AI agency contact India",
+    "start a project GIJUHAN",
+  ],
   alternates: { canonical: "https://gijuhan.com/contact" },
-  robots: { index: true, follow: true },
   openGraph: {
     title: "Contact GIJUHAN — Let's Build Together",
-    description: "Open a direct line to GIJUHAN's lead architects. Share your brief, define your vision, and let's engineer a digital solution that delivers real impact.",
+    description:
+      "Open a direct line to GIJUHAN's Delhi team. Share your brief and let's engineer a digital solution that delivers measurable impact.",
     url: "https://gijuhan.com/contact",
     type: "website",
-    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630, alt: "Contact GIJUHAN" }],
+    locale: "en_IN",
+    siteName: "GIJUHAN",
+    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@TheGijuhan",
-    creator: "@TheGijuhan",
     title: "Contact GIJUHAN | Start Your Project",
     description: "Big ideas deserve the right team. Tell us about your project and let's build something the world hasn't seen before.",
     images: ["https://gijuhan.com/og-image.jpg"],
@@ -27,8 +35,14 @@ export const metadata = {
 };
 
 export default function ContactPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", item: absoluteUrl("/") },
+    { name: "Contact", item: absoluteUrl("/contact") },
+  ]);
+
   return (
     <>
+      <JsonLd data={breadcrumbSchema} id="contact-breadcrumb-schema" />
       {/* 1. Header Array */}
       <section className="pt-40 pb-20 relative overflow-hidden bg-bg z-10">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
@@ -93,10 +107,10 @@ export default function ContactPage() {
                     <h3 className="font-[family-name:var(--font-syne)] text-[10px] tracking-[0.3em] font-bold uppercase">Location Node</h3>
                   </div>
                   <p className="font-[family-name:var(--font-shippori)] text-3xl font-bold text-text leading-tight mb-2">
-                    India
+                    Delhi, India
                   </p>
                   <p className="text-muted tracking-widest text-[10px] uppercase">
-                    Operating Globally (UTC+5:30)
+                    Serving clients globally (UTC+5:30)
                   </p>
                 </div>
               </FadeIn>

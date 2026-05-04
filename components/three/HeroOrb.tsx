@@ -11,7 +11,7 @@ const PLANET_SERVICES = [
   { title: "Design", href: "/services/design", color: "#C9A84C" },
   { title: "Development", href: "/services/development", color: "#9CA3AF" },
   { title: "Marketing", href: "/services/marketing", color: "#E63946" },
-  { title: "Solutions", href: "/services/solutions", color: "#C9A84C" },
+  { title: "Solutions", href: "/solutions", color: "#C9A84C" },
   { title: "Support", href: "/services/support", color: "#9CA3AF" },
 ];
 

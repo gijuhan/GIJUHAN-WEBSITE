@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
 import Marquee from "@/components/home/Marquee";
@@ -30,26 +31,31 @@ const ContactCTA = dynamic(() => import("@/components/home/ContactCTA"), {
   ssr: true,
 });
 
-export const metadata = {
-  title: "GIJUHAN | AI-Powered Tech & Creative Digital Agency",
-  description: "GIJUHAN is a global AI tech and creative agency delivering high-impact web design, full-stack development, digital marketing, and intelligent automation solutions. Rooted in Kanso, Kaizen & Iki.",
-  keywords: ["AI digital agency","tech and marketing agency","web design agency","full stack development agency","AI automation agency","digital marketing agency","creative tech agency","GIJUHAN","Japanese design philosophy","Kanso Kaizen Iki","brand digital experience","global digital agency","UI UX design agency","web development company","data-driven marketing"],
-  alternates: { canonical: "https://gijuhan.com" },
-  robots: { index: true, follow: true },
+export const metadata: Metadata = {
+  title:
+    "GIJUHAN | AI-Powered Digital Agency — Design, Development & Marketing in India",
+  description:
+    "GIJUHAN is a Delhi-based AI tech and creative digital agency offering web design, full-stack development, AI automation, and digital marketing services across India.",
+  keywords:
+    "AI agency India, digital agency Delhi, web design India, Shopify development India, AI automation agency, UI UX design Delhi",
   openGraph: {
-    title: "GIJUHAN — Technology Meets Artistry",
+    title: "GIJUHAN | AI-Powered Digital Agency in India",
     description: "We build immersive, brand-led digital experiences powered by AI and driven by Japanese design philosophy. Design. Development. Marketing. Solutions.",
     url: "https://gijuhan.com",
+    siteName: "GIJUHAN",
+    locale: "en_IN",
     type: "website",
-    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630, alt: "GIJUHAN — AI Tech & Creative Agency" }],
+    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@TheGijuhan",
-    creator: "@TheGijuhan",
-    title: "GIJUHAN | AI Tech & Creative Agency",
-    description: "High-impact digital products built with AI automation, full-stack engineering, and data-driven marketing. Let's build together.",
+    title: "GIJUHAN | AI-Powered Digital Agency",
+    description:
+      "Tokyo-inspired digital agency in Delhi — Design, Development, AI & Marketing.",
     images: ["https://gijuhan.com/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://gijuhan.com",
   },
 };
 

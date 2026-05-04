@@ -133,7 +133,7 @@ export const CASE_STUDIES = [
     solution: "We engineered a custom Shopify storefront from the ground up — no generic templates. The build includes a dynamic BMI & health score calculator, a tiered subscription pricing system (Lite / Standard / Pro) with weekly and monthly toggles, video-first product showcases, and a seamless integration guiding users to Zomato and Swiggy. The UI leans into clean, appetite-stimulating visual design while maintaining conversion-focused hierarchy throughout every scroll."
   },
   {
-    slug: "chandini-and-priyanka",
+    slug: "chandini-priyanka",
     title: "Chandini & Priyanka",
     category: "E-Commerce",
     tags: ["Shopify", "Branding", "E-Commerce"],

@@ -70,10 +70,10 @@ export default function AboutClient() {
 
               <div className="space-y-6 text-muted text-lg leading-relaxed border-l border-border pl-6">
                 <p>
-                  Founded with the belief that the best digital experiences come from the intersection of technical excellence and creative strategy, Gijuhan was born to be completely different.
+                  Founded with the belief that the best digital experiences come from the intersection of technical excellence and creative strategy, GIJUHAN was built to do more than make brands look modern.
                 </p>
                 <p>
-                  We reject the bloated, corporate approach to engineering. Instead, we draw deep inspiration from Japanese design philosophy—the elegance of simplicity, continuous improvement, and purposeful execution.
+                  Based in Delhi, India and serving clients globally, we reject the bloated, corporate approach to digital execution. Instead, we draw from Japanese design philosophy: simplicity that sharpens focus, continuous improvement that compounds results, and purposeful execution that keeps every decision tied to business impact.
                 </p>
               </div>
             </div>
@@ -94,6 +94,54 @@ export default function AboutClient() {
               <div className="absolute bottom-8 right-8">
                 <span className="font-[family-name:var(--font-syne)] text-[10px] tracking-widest text-muted uppercase">GIJUHAN_INT</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 border-y border-border bg-surface py-32">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <span className="section-label mb-6 block">Mission</span>
+              <h2 className="font-[family-name:var(--font-shippori)] text-4xl font-bold text-text md:text-5xl">
+                Why we exist
+              </h2>
+            </div>
+            <div className="space-y-6 text-lg leading-relaxed text-muted lg:col-span-8">
+              <p>
+                Our mission is to help ambitious businesses use design, development, AI, and marketing as one connected growth system instead of four disconnected vendors. We believe digital work should create leverage, not noise.
+              </p>
+              <p>
+                Every GIJUHAN engagement is designed to simplify the path from idea to execution. That means sharper user journeys, faster websites, clearer messaging, and automation that removes operational drag rather than adding more software for your team to manage.
+              </p>
+              <p>
+                We work from Delhi with a global mindset, pairing local market understanding with production standards expected by modern startups, D2C brands, and growing companies everywhere.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 bg-bg py-32">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <span className="section-label mb-6 block">Why GIJUHAN</span>
+              <h2 className="font-[family-name:var(--font-shippori)] text-4xl font-bold text-text md:text-6xl">
+                The name is the model
+              </h2>
+            </div>
+            <div className="space-y-6 text-lg leading-relaxed text-muted lg:col-span-7">
+              <p>
+                The name GIJUHAN comes from two core disciplines that shape every engagement: <span className="text-text">Giju</span>, representing technology, and <span className="text-text">Han</span>, representing marketing. We chose that structure deliberately because the strongest digital outcomes never come from code or campaigns in isolation.
+              </p>
+              <p>
+                When engineering decisions understand acquisition, retention, and conversion, products become easier to use and easier to grow. When marketing understands platform constraints, performance budgets, and analytics architecture, campaigns stop overpromising and start compounding. GIJUHAN exists in that overlap.
+              </p>
+              <p>
+                The result is an agency model built for clarity. We can shape the brand, design the experience, build the system, and scale the traffic with one point of view instead of forcing clients to translate between disconnected teams.
+              </p>
             </div>
           </div>
         </div>

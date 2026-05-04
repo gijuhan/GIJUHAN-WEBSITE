@@ -7,6 +7,11 @@ import Button from "@/components/ui/Button";
 import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
 
+type CaseStudyVisual = {
+  image?: string;
+  video?: string;
+};
+
 export default function FeaturedWork() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -39,6 +44,7 @@ export default function FeaturedWork() {
           {CASE_STUDIES.filter(study => study.status === 'Completed').slice(0, 3).map((study, index) => {
             const isHovered = hoveredIndex === index;
             const isEven = index % 2 === 0;
+            const visualStudy = study as CaseStudyVisual;
 
             return (
               <FadeIn key={study.slug} delay={0.1} direction="up">
@@ -49,9 +55,9 @@ export default function FeaturedWork() {
                 >
                   {/* Image — CSS effects replace Three.js ImageDistortion */}
                   <div className={`relative w-full lg:w-[65%] aspect-[4/3] overflow-hidden bg-surface border border-border transition-colors duration-500 ${isHovered ? 'border-gold/50' : ''}`}>
-                    {(study as any).video ? (
+                    {visualStudy.video ? (
                       <video
-                        src={(study as any).video}
+                        src={visualStudy.video}
                         autoPlay
                         muted
                         loop
@@ -61,7 +67,7 @@ export default function FeaturedWork() {
                       />
                     ) : (
                       <Image
-                        src={(study as any).image}
+                        src={visualStudy.image ?? "https://gijuhan.com/og-image.jpg"}
                         alt={study.title}
                         fill
                         className={`object-cover z-0 transition-all duration-700 ${
@@ -69,7 +75,7 @@ export default function FeaturedWork() {
                             ? 'scale-105 brightness-110 saturate-[1.2]'
                             : 'scale-100 brightness-[0.8] saturate-100'
                         }`}
-                        sizes="(max-width: 768px) 100vw, 65vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         loading="lazy"
                       />
                     )}

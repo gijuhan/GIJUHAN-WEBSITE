@@ -10,6 +10,14 @@ const HeroOrb = dynamic(() => import("@/components/three/HeroOrb"), {
   ssr: false,
 });
 
+type IdleWindow = Window & {
+  requestIdleCallback?: (
+    callback: IdleRequestCallback,
+    options?: IdleRequestOptions
+  ) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
+
 export default function Hero() {
   const { scrollY } = useScroll();
   const [showOrb, setShowOrb] = useState(false);
@@ -21,15 +29,17 @@ export default function Hero() {
     if (window.innerWidth < 768) return;
 
     // Load after idle
-    if ("requestIdleCallback" in window) {
-      const id = (window as any).requestIdleCallback(
+    const idleWindow = window as IdleWindow;
+
+    if (idleWindow.requestIdleCallback) {
+      const id = idleWindow.requestIdleCallback(
         () => {
           setShowOrb(true);
           setShowVideo(true);
         },
         { timeout: 3000 }
       );
-      return () => (window as any).cancelIdleCallback(id);
+      return () => idleWindow.cancelIdleCallback?.(id);
     } else {
       const timer = setTimeout(() => {
         setShowOrb(true);
@@ -68,12 +78,15 @@ export default function Hero() {
 
       {/* Extreme Typography Layout */}
       <motion.div style={{ opacity }} className="relative z-10 w-full structural-grid max-w-[1600px] mx-auto pointer-events-none">
+        <h1 className="sr-only">
+          AI-Powered Digital Agency — Design, Development & Marketing in India
+        </h1>
         <div className="col-span-12 flex flex-col gap-2">
 
           <motion.div style={{ y: y1 }} className="flex flex-wrap justify-between items-end border-b border-border/50 pb-4 mb-4 gap-4">
             <FadeIn>
               <div className="flex items-center gap-4">
-                <span className="section-label text-gold font-bold tracking-[0.2em] text-[10px] sm:text-xs">Let's Build</span>
+                <span className="section-label text-gold font-bold tracking-[0.2em] text-[10px] sm:text-xs">Let&apos;s Build</span>
                 <span className="w-12 h-[1px] bg-gold/50"></span>
               </div>
             </FadeIn>
@@ -84,14 +97,16 @@ export default function Hero() {
             </FadeIn>
           </motion.div>
 
-          <StaggeredText
-            text="TECHNOLOGY"
-            tag="h1"
-            className="text-massive leading-[0.9] text-text mix-blend-difference relative z-10"
-            staggerDelay={0.08}
-            startDelay={0.3}
-            isLCP={true}
-          />
+          <div aria-hidden="true">
+            <StaggeredText
+              text="TECHNOLOGY"
+              tag="span"
+              className="block text-massive leading-[0.9] text-text mix-blend-difference relative z-10"
+              staggerDelay={0.08}
+              startDelay={0.3}
+              isLCP={true}
+            />
+          </div>
 
           <motion.div style={{ y: y2 }} className="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-6 lg:mt-2 relative z-20">
             <FadeIn delay={0.6} direction="up" className="md:w-5/12 lg:w-1/3 z-30">
@@ -100,13 +115,15 @@ export default function Hero() {
               </p>
             </FadeIn>
 
-            <StaggeredText
-              text="MARKETING"
-              tag="h1"
-              className="text-massive leading-[0.9] text-text text-right mix-blend-difference relative z-10"
-              staggerDelay={0.08}
-              startDelay={0.5}
-            />
+            <div aria-hidden="true" className="w-full">
+              <StaggeredText
+                text="MARKETING"
+                tag="span"
+                className="block text-massive leading-[0.9] text-text text-right mix-blend-difference relative z-10"
+                staggerDelay={0.08}
+                startDelay={0.5}
+              />
+            </div>
           </motion.div>
 
         </div>
