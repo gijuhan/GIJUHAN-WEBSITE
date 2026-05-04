@@ -1,15 +1,14 @@
-"use client";
-
-import { use } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CASE_STUDIES } from "@/lib/constants";
-import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
+import { FadeIn } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import Button from "@/components/ui/Button";
-import dynamic from "next/dynamic";
 import { ArrowLeft, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl, buildBreadcrumbSchema } from "@/lib/seo";
 
 
 // Dynamic Abstract Texture for Hero
@@ -18,23 +17,86 @@ const generateAbstractTexture = (slug: string) => {
   return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"><rect width="1024" height="1024" fill="%230A0A0A"/><circle cx="512" cy="512" r="${(seed % 400) + 200}" fill="%23111111"/><path d="M0 0Q512 ${(seed % 1024)} 1024 1024" stroke="%23E63946" stroke-width="8" fill="none" opacity="0.4"/><path d="M1024 0Q512 ${(seed % 800)} 0 1024" stroke="%23C9A84C" stroke-width="4" fill="none" opacity="0.6"/></svg>`;
 };
 
-export default function WorkCaseStudy({
-  params,
-}: {
+type CaseStudyVisual = {
+  video?: string;
+  image?: string;
+  gallery?: readonly string[];
+  hideGallery?: boolean;
+};
+
+type PageProps = {
   params: Promise<{ slug: string }>;
-}) {
-  const resolvedParams = use(params);
-  const slug = resolvedParams.slug;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = CASE_STUDIES.find((entry) => entry.slug === slug) as
+    | ((typeof CASE_STUDIES)[number] & CaseStudyVisual)
+    | undefined;
+
+  if (!project) {
+    return {};
+  }
+
+  const canonical = absoluteUrl(`/work/${slug}`);
+
+  return {
+    title: `${project.title} Case Study | GIJUHAN`,
+    description: project.description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: `${project.title} Case Study | GIJUHAN`,
+      description: project.description,
+      url: canonical,
+      siteName: "GIJUHAN",
+      locale: "en_IN",
+      type: "article",
+      images: [
+        {
+          url:
+            (project as { gallery?: readonly string[]; image?: string }).gallery?.[0] ??
+            (project as { image?: string }).image ??
+            "https://gijuhan.com/og-image.jpg",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} Case Study | GIJUHAN`,
+      description: project.description,
+      images: [
+        (project as { gallery?: readonly string[]; image?: string }).gallery?.[0] ??
+          (project as { image?: string }).image ??
+          "https://gijuhan.com/og-image.jpg",
+      ],
+    },
+  };
+}
+
+export default async function WorkCaseStudy({ params }: PageProps) {
+  const { slug } = await params;
   const projectIndex = CASE_STUDIES.findIndex((c) => c.slug === slug);
-  const project = CASE_STUDIES[projectIndex];
+  const project = CASE_STUDIES[projectIndex] as
+    | ((typeof CASE_STUDIES)[number] & CaseStudyVisual)
+    | undefined;
 
   if (!project) notFound();
 
   // Find next project for the footer
   const nextProject = CASE_STUDIES[(projectIndex + 1) % CASE_STUDIES.length];
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", item: absoluteUrl("/") },
+    { name: "Work", item: absoluteUrl("/work") },
+    { name: project.title, item: absoluteUrl(`/work/${slug}`) },
+  ]);
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema} id={`${slug}-work-breadcrumb-schema`} />
       {project.status === 'In Progress' && (
         <div className="fixed top-0 left-0 w-full bg-bg/80 backdrop-blur-md border-b border-border/50 z-50 py-3 text-center transition-all">
           <span className="font-[family-name:var(--font-syne)] text-[9px] tracking-[0.3em] uppercase text-gold">
@@ -51,15 +113,26 @@ export default function WorkCaseStudy({
           
           {/* Abstract 3D Canvas Background mapped to this specific project */}
           <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
+            {project.video ? (
+              <video
+                src={project.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
               <Image
-                src={(project as any).image || generateAbstractTexture(slug)}
+                src={project.image || generateAbstractTexture(slug)}
                 alt={`${project.title} background`}
                 fill
                 className="object-cover scale-125 saturate-150 -rotate-[15deg] brightness-75"
                 sizes="100vw"
-                priority={false}
-                loading="eager"
+                priority={true}
               />
+            )}
           </div>
 
           <div className="container mx-auto px-6 lg:px-12 relative z-10 flex flex-col pb-20 pt-32">
@@ -150,14 +223,14 @@ export default function WorkCaseStudy({
                     </FadeIn>
 
                     {/* Full Width Visual */}
-                    {!(project as any).hideGallery && (
+                    {!project.hideGallery && (
                         <FadeIn direction="up" className="w-full aspect-[16/9] structural-border bg-bg relative overflow-hidden flex items-center justify-center group">
                             <Image
-                                src={(project as any).gallery?.[0] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-1.jpg`}
+                                src={project.gallery?.[0] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-1.jpg`}
                                 alt={`${project.title} - Visual 1`}
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                sizes="(max-width: 1200px) 100vw, 80vw"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 66vw"
                                 loading="lazy"
                             />
                             <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_01</div>
@@ -176,26 +249,26 @@ export default function WorkCaseStudy({
                     </FadeIn>
 
                     {/* Two Column Visuals */}
-                    {!(project as any).hideGallery && (
+                    {!project.hideGallery && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                            <FadeIn direction="up" className="w-full aspect-square structural-border bg-bg relative flex items-center justify-center overflow-hidden group">
                                <Image
-                                   src={(project as any).gallery?.[1] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-2.jpg`}
+                                   src={project.gallery?.[1] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-2.jpg`}
                                    alt={`${project.title} - Visual 2`}
                                    fill
                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                   sizes="(max-width: 768px) 100vw, 40vw"
+                                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                    loading="lazy"
                                />
                                <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_02</div>
                            </FadeIn>
                            <FadeIn direction="up" delay={0.2} className="w-full aspect-square structural-border bg-bg relative flex items-center justify-center overflow-hidden group">
                                <Image
-                                   src={(project as any).gallery?.[2] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-3.jpg`}
+                                   src={project.gallery?.[2] || `https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/${project.slug}-3.jpg`}
                                    alt={`${project.title} - Visual 3`}
                                    fill
                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                   sizes="(max-width: 768px) 100vw, 40vw"
+                                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                />
                                <div className="absolute top-4 left-4 text-[10px] tracking-widest text-gold opacity-50 z-10 mix-blend-difference">SCREEN_03</div>
                            </FadeIn>

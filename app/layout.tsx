@@ -6,6 +6,8 @@ import Footer from "@/components/layout/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Script from "next/script";
+import JsonLd from "@/components/seo/JsonLd";
+import { DEFAULT_OG_IMAGE, homePageSchema } from "@/lib/seo";
 
 const shippori = Shippori_Mincho({
   variable: "--font-shippori",
@@ -23,48 +25,42 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://gijuhan.com"),
-  title: {
-    default: "GIJUHAN — AI Tech & Creative Agency | Design, Development & Marketing",
-    template: "%s | GIJUHAN",
-  },
+  title: "GIJUHAN | AI-Powered Digital Agency — Design, Development & Marketing in India",
   description:
-    "Gijuhan merges cutting-edge technology with creative marketing to deliver world-class digital experiences. UI/UX, Full Stack Dev, AI Automation, SEO & more.",
+    "GIJUHAN is a Delhi-based AI tech and creative digital agency offering web design, full-stack development, AI automation, and digital marketing services across India.",
   keywords: [
-    "AI agency",
-    "tech agency",
-    "creative agency",
-    "web development",
-    "UI/UX design",
-    "AI automation",
-    "digital marketing",
-    "SEO",
-    "full stack development",
+    "AI agency India",
+    "digital agency Delhi",
+    "web design India",
+    "Shopify development India",
+    "AI automation agency",
+    "UI UX design Delhi",
   ],
   authors: [{ name: "GIJUHAN" }],
   creator: "GIJUHAN",
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_IN",
     url: "https://gijuhan.com",
     siteName: "GIJUHAN",
-    title: "GIJUHAN — AI Tech & Creative Agency",
+    title: "GIJUHAN | AI-Powered Digital Agency in India",
     description:
-      "Gijuhan merges cutting-edge technology with creative marketing to deliver world-class digital experiences.",
+      "GIJUHAN helps Indian startups and businesses with design, development, AI automation, and digital marketing.",
     images: [
       {
-        url: "/og-image.png",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "GIJUHAN — Technology + Marketing = Innovation in Action",
+        alt: "GIJUHAN — AI-Powered Digital Agency in India",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIJUHAN — AI Tech & Creative Agency",
+    title: "GIJUHAN | AI-Powered Digital Agency",
     description:
-      "Gijuhan merges cutting-edge technology with creative marketing to deliver world-class digital experiences.",
-    images: ["/og-image.png"],
+      "Tokyo-inspired digital agency in Delhi delivering design, development, AI automation, and marketing.",
+    images: [DEFAULT_OG_IMAGE],
   },
   robots: {
     index: true,
@@ -84,59 +80,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* ── Organization Schema ── */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "GIJUHAN",
-              url: "https://gijuhan.com",
-              logo: "https://gijuhan.com/logo.png",
-              description:
-                "GIJUHAN is a global AI tech and creative agency delivering web design, full-stack development, digital marketing, and intelligent automation solutions.",
-              email: "hello@gijuhan.com",
-              foundingLocation: "Pune, India",
-              areaServed: "Worldwide",
-              slogan: "Technology + Marketing = Innovation in Action",
-              sameAs: [
-                "https://linkedin.com/company/gijuhan",
-                "https://instagram.com/thegijuhan",
-                "https://x.com/TheGijuhan",
-              ],
-              contactPoint: {
-                "@type": "ContactPoint",
-                email: "hello@gijuhan.com",
-                contactType: "Customer Support",
-                availableLanguage: "English",
-                hoursAvailable: "Mo-Fr 09:00-18:00",
-              },
-            }),
-          }}
-        />
-
-        {/* ── WebSite Schema (enables Google Sitelinks Search Box) ── */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "GIJUHAN",
-              url: "https://gijuhan.com",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: {
-                  "@type": "EntryPoint",
-                  urlTemplate: "https://gijuhan.com/blog?q={search_term_string}",
-                },
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
-        />
-        {/* ── Preconnect & DNS Prefetch for critical origins ── */}
+        <JsonLd data={homePageSchema} id="gijuhan-home-schema" />
         <link rel="preconnect" href="https://3ogl08hjksjgbrka.public.blob.vercel-storage.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>

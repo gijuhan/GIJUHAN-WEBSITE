@@ -85,6 +85,18 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 ::selection {
   background-color: var(--color-accent);
   color: var(--color-white);
@@ -156,5 +168,4 @@ h1, h2, h3, h4, .text-brutalist {
     cursor: none !important;
   }
 }
-
 

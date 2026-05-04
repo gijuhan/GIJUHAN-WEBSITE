@@ -78,11 +78,11 @@ export default function Footer() {
             © {new Date().getFullYear()} Gijuhan. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-xs text-muted">
-            <Link href="#" className="hover:text-text transition-colors">
+            <Link href="/privacy-policy" className="hover:text-text transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-text transition-colors">
-              Terms
+            <Link href="/terms" className="hover:text-text transition-colors">
+              Terms of Service
             </Link>
             <Link href="/sitemap.xml" className="hover:text-text transition-colors">
               Sitemap

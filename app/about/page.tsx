@@ -1,28 +1,53 @@
+import type { Metadata } from "next";
 import AboutClient from "./AboutClient";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl, buildBreadcrumbSchema } from "@/lib/seo";
 
-export const metadata = {
-  title: "About GIJUHAN | AI Tech & Creative Agency Built Different",
-  description: "Learn the story behind GIJUHAN — the fusion of Giju (Technology) and Han (Marketing). Built on Japanese design principles: Kanso (simplicity), Kaizen (improvement), and Iki (purpose).",
-  keywords: ["about GIJUHAN","digital agency story","Japanese design agency","Kanso Kaizen Iki philosophy","tech and marketing fusion","creative tech agency","agency philosophy","digital agency India","global creative agency","purposeful design agency","minimal design agency","who is GIJUHAN","agency values","innovative digital agency","AI marketing agency"],
+export const metadata: Metadata = {
+  title: "About GIJUHAN | Tokyo-Inspired AI Digital Agency in Delhi, India",
+  description:
+    "Learn about GIJUHAN — a Delhi-based digital agency founded on Japanese design philosophy (Kanso, Kaizen, Iki). We build AI-driven digital experiences that convert.",
+  keywords: [
+    "about GIJUHAN",
+    "digital agency Delhi",
+    "AI agency India",
+    "Japanese design philosophy",
+    "Kanso Kaizen Iki",
+    "Delhi digital agency",
+  ],
   alternates: { canonical: "https://gijuhan.com/about" },
-  robots: { index: true, follow: true },
   openGraph: {
-    title: "About GIJUHAN — Where Technology Meets Artistry",
-    description: "Born from a vision that the best digital experiences emerge at the intersection of technical precision and creative strategy. Discover the GIJUHAN philosophy.",
+    title: "About GIJUHAN | Tokyo-Inspired AI Digital Agency in Delhi, India",
+    description:
+      "Meet the Delhi-based team behind GIJUHAN and learn how Japanese design philosophy shapes our AI, design, and development work.",
     url: "https://gijuhan.com/about",
     type: "website",
-    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630, alt: "About GIJUHAN" }],
+    locale: "en_IN",
+    siteName: "GIJUHAN",
+    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@TheGijuhan",
-    creator: "@TheGijuhan",
-    title: "About GIJUHAN | Our Story & Philosophy",
+    title: "About GIJUHAN | Tokyo-Inspired AI Digital Agency",
     description: "We rejected the bloated corporate approach to digital. Instead we built GIJUHAN — precise, purposeful, and designed to win.",
     images: ["https://gijuhan.com/og-image.jpg"],
+  },
+  other: {
+    addressLocality: "Delhi",
+    addressCountry: "India",
   },
 };
 
 export default function AboutPage() {
-  return <AboutClient />;
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", item: absoluteUrl("/") },
+    { name: "About", item: absoluteUrl("/about") },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema} id="about-breadcrumb-schema" />
+      <AboutClient />
+    </>
+  );
 }

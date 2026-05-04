@@ -1,6 +1,4 @@
-"use client";
-
-import { use } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BLOG_POSTS_FULL, BlogSection } from "@/lib/blog-content";
 import { FadeIn } from "@/components/ui/AnimatedText";
@@ -8,6 +6,8 @@ import ContactCTA from "@/components/home/ContactCTA";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Clock, CheckCircle2 } from "lucide-react";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl, buildBreadcrumbSchema } from "@/lib/seo";
 
 function BlogContent({ sections }: { sections: BlogSection[] }) {
   return (
@@ -86,19 +86,59 @@ function BlogContent({ sections }: { sections: BlogSection[] }) {
   );
 }
 
-export default function BlogPostPage({
-  params,
-}: {
+type PageProps = {
   params: Promise<{ slug: string }>;
-}) {
-  const resolvedParams = use(params);
-  const slug = resolvedParams.slug;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = BLOG_POSTS_FULL.find((p) => p.slug === slug);
+
+  if (!post) {
+    return {};
+  }
+
+  const canonical = absoluteUrl(`/blog/${slug}`);
+
+  return {
+    title: `${post.title} | GIJUHAN`,
+    description: post.excerpt,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: canonical,
+      siteName: "GIJUHAN",
+      locale: "en_IN",
+      type: "article",
+      images: [{ url: absoluteUrl(post.heroImage), width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [absoluteUrl(post.heroImage)],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params;
   const post = BLOG_POSTS_FULL.find((p) => p.slug === slug);
 
   if (!post) notFound();
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", item: absoluteUrl("/") },
+    { name: "Blog", item: absoluteUrl("/blog") },
+    { name: post.title, item: absoluteUrl(`/blog/${slug}`) },
+  ]);
+
   return (
     <>
+      <JsonLd data={breadcrumbSchema} id={`${slug}-blog-breadcrumb-schema`} />
       <article className="min-h-screen bg-bg relative">
         {/* 1. Deep Structural Hero */}
         <header className="relative pt-40 pb-20 border-b border-border/50 overflow-hidden mix-blend-difference z-10">

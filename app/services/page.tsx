@@ -1,29 +1,49 @@
 import type { Metadata } from "next";
 import ServicesExperienceWrapper from "@/components/services/ServicesExperienceWrapper";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl, buildBreadcrumbSchema } from "@/lib/seo";
 
-export const metadata = {
-  title: "Our Services | Web Design, Development & Marketing — GIJUHAN",
-  description: "Explore GIJUHAN's full suite of services: UI/UX design, full-stack development, SEO & digital marketing, and platform support. Built for brands that demand results.",
-  keywords: ["digital agency services","web design services","web development services","digital marketing services","UI UX design services","full stack development","SEO services","platform support services","branding services","Shopify development","WordPress development","CRM support","DevOps services","creative agency services","technology agency"],
+export const metadata: Metadata = {
+  title: "Services | Web Design, AI Development & Marketing — GIJUHAN India",
+  description:
+    "GIJUHAN offers full-spectrum digital services: UI/UX Design, Full-Stack Development, AI Automation, SEO, Social Media Marketing, and CRM Support across India.",
+  keywords: [
+    "digital agency services India",
+    "web design India",
+    "AI development India",
+    "SEO agency Delhi",
+    "Shopify development India",
+  ],
   alternates: { canonical: "https://gijuhan.com/services" },
-  robots: { index: true, follow: true },
   openGraph: {
-    title: "GIJUHAN Services — Design. Dev. Marketing. Support.",
-    description: "From Figma prototypes to AI-powered deployments — every GIJUHAN service is engineered for performance, conversion, and global scale.",
+    title: "Services | Web Design, AI Development & Marketing — GIJUHAN India",
+    description:
+      "Explore GIJUHAN's service stack across design, development, marketing, AI automation, and technical support.",
     url: "https://gijuhan.com/services",
     type: "website",
-    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630, alt: "GIJUHAN Services" }],
+    locale: "en_IN",
+    siteName: "GIJUHAN",
+    images: [{ url: "https://gijuhan.com/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@TheGijuhan",
-    creator: "@TheGijuhan",
-    title: "GIJUHAN Services | Design, Dev & Marketing",
-    description: "Explore our full-spectrum digital services. Crafted with precision. Delivered with purpose.",
+    title: "GIJUHAN Services | Web Design, AI Development & Marketing",
+    description:
+      "Explore our full-spectrum digital services across design, development, automation, marketing, and support.",
     images: ["https://gijuhan.com/og-image.jpg"],
   },
 };
 
 export default function ServicesPage() {
-  return <ServicesExperienceWrapper />;
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", item: absoluteUrl("/") },
+    { name: "Services", item: absoluteUrl("/services") },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema} id="services-breadcrumb-schema" />
+      <ServicesExperienceWrapper />
+    </>
+  );
 }
