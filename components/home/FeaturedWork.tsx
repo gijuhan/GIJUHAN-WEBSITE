@@ -6,7 +6,7 @@ import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import Button from "@/components/ui/Button";
 import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 type CaseStudyVisual = {
   image?: string;

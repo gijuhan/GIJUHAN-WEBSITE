@@ -8,7 +8,7 @@ import { CASE_STUDIES } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import RamenAnimation from "@/components/ui/RamenAnimation";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 export default function WorkPageClient() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { NAV_LINKS, SERVICES } from "@/lib/constants";
 import { SUB_SERVICES } from "@/lib/sub-services";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

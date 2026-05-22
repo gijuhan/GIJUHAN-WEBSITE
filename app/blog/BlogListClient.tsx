@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 export default function BlogListClient() {
   return (
