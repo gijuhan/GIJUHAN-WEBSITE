@@ -5,7 +5,7 @@ import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import Button from "@/components/ui/Button";
 import { SERVICE_OPTIONS } from "@/lib/constants";
 import { Send, CheckCircle } from "lucide-react";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 export default function ContactPageClient() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');

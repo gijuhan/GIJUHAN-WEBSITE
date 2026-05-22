@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ScrambleText from "@/components/ui/ScrambleText";
 import GlobalCTA from "@/components/ui/GlobalCTA";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 const SOLUTIONS_DATA = [
   {

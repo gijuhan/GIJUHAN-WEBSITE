@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import posthog from "posthog-js";
+import { posthog } from "@/lib/posthog-client";
 
 export default function GlobalCTA() {
   return (
