@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
+import posthog from "posthog-js";
 
 export default function BlogListClient() {
   return (
@@ -53,7 +54,11 @@ export default function BlogListClient() {
             <div className="flex flex-col border-t border-border/50">
                {BLOG_POSTS.map((post, index) => (
                   <FadeIn key={post.slug} delay={0.1}>
-                     <Link href={`/blog/${post.slug}`} className="group block cursor-none">
+                     <Link
+                       href={`/blog/${post.slug}`}
+                       className="group block cursor-none"
+                       onClick={() => posthog.capture('blog_post_clicked', { slug: post.slug, title: post.title, category: post.category })}
+                     >
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12 px-6 lg:px-12 border-b border-border/50 hover:bg-gold/5 transition-colors duration-500 relative overflow-hidden">
                            
                            {/* Hover Abstract Overlay */}

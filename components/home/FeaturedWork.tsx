@@ -6,6 +6,7 @@ import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import Button from "@/components/ui/Button";
 import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
+import posthog from "posthog-js";
 
 type CaseStudyVisual = {
   image?: string;
@@ -52,6 +53,7 @@ export default function FeaturedWork() {
                   className={`group relative flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16 cursor-pointer`}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
+                  onClick={() => posthog.capture('featured_work_clicked', { slug: study.slug, title: study.title, tags: study.tags })}
                 >
                   {/* Image — CSS effects replace Three.js ImageDistortion */}
                   <div className={`relative w-full lg:w-[65%] aspect-[4/3] overflow-hidden bg-surface border border-border transition-colors duration-500 ${isHovered ? 'border-gold/50' : ''}`}>

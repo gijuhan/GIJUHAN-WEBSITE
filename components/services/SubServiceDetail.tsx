@@ -5,12 +5,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
-import Button from "@/components/ui/Button";
 import ContactCTA from "@/components/home/ContactCTA";
 import { SubService } from "@/lib/sub-services";
 import * as Icons from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const subServiceIconMap: Record<string, any> = {
+const subServiceIconMap: Record<string, LucideIcon> = {
   Figma: Icons.Figma,
   Layout: Icons.Layout,
   Palette: Icons.Palette,
@@ -51,7 +51,6 @@ export default function SubServiceDetail({
 
   const iconY = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const iconRotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const Icon = subServiceIconMap[service.icon] || Icons.HelpCircle;
 
@@ -59,15 +58,7 @@ export default function SubServiceDetail({
     <div className="bg-bg min-h-screen relative" ref={containerRef} style={{ backgroundColor: '#0A0A0A' }}>
       
       {/* 1. Interactive Hero */}
-      <section className="relative h-[90vh] flex flex-col justify-center overflow-hidden border-b border-border">
-        {/* Background Decorative Elements */}
-        <motion.div 
-          style={{ y: iconY, rotate: iconRotate, opacity }}
-          className="absolute -right-24 -top-24 text-gold opacity-[0.05] pointer-events-none"
-        >
-          <Icon size={600} strokeWidth={0.5} />
-        </motion.div>
-
+      <section className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden border-b border-border py-28 md:py-32">
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <Link 
             href={categoryHref}
@@ -91,7 +82,18 @@ export default function SubServiceDetail({
               </FadeIn>
             </div>
           </div>
+
         </div>
+
+        <motion.div
+          style={{ y: iconY, rotate: iconRotate }}
+          className="pointer-events-none absolute right-[-4rem] top-[56%] hidden -translate-y-1/2 lg:block xl:right-0"
+        >
+          <Icon
+            strokeWidth={0.75}
+            className="h-auto w-[22rem] text-gold lg:w-[28rem] xl:w-[32rem]"
+          />
+        </motion.div>
 
         {/* Technical Grid Background */}
         <div 
@@ -115,7 +117,7 @@ export default function SubServiceDetail({
                 Technical Highlights
               </h2>
               <p className="text-muted leading-relaxed">
-                We push the boundaries of what's possible in <span className="text-text">{service.title}</span>, utilizing tier-1 global infrastructure and precision engineering to deliver unfair competitive advantages.
+                We push the boundaries of what&apos;s possible in <span className="text-text">{service.title}</span>, utilizing tier-1 global infrastructure and precision engineering to deliver unfair competitive advantages.
               </p>
             </div>
 

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function GlobalCTA() {
   return (
@@ -18,11 +19,12 @@ export default function GlobalCTA() {
             Ready to Scale?
           </h3>
           <p className="text-muted text-base md:text-lg mb-10 max-w-2xl mx-auto">
-            Let's architect a solution tailored to your operational bottlenecks.
+            Let&apos;s architect a solution tailored to your operational bottlenecks.
           </p>
-          <Link 
+          <Link
             href="/contact"
             className="inline-flex items-center gap-3 px-8 py-4 md:px-10 md:py-5 bg-text text-bg font-bold font-[family-name:var(--font-syne)] uppercase tracking-[0.2em] text-sm hover:bg-gold hover:text-bg transition-colors duration-300 rounded-sm"
+            onClick={() => posthog.capture('cta_clicked', { location: 'global_cta' })}
           >
             Start a Conversation <ArrowRight size={18} />
           </Link>

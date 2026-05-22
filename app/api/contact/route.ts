@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getPostHogClient } from '@/lib/posthog-server';
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,6 +19,22 @@ export async function POST(req: NextRequest) {
     const result = await response.json();
 
     if (result.success) {
+      const distinctId = req.headers.get('X-POSTHOG-DISTINCT-ID') ?? email;
+      const sessionId = req.headers.get('X-POSTHOG-SESSION-ID');
+      const posthog = getPostHogClient();
+      posthog.identify({ distinctId: email, properties: { name, email, company } });
+      posthog.capture({
+        distinctId,
+        event: 'contact_lead_received',
+        properties: {
+          $session_id: sessionId ?? undefined,
+          name,
+          email,
+          company,
+          service,
+          source,
+        },
+      });
       return NextResponse.json({ success: true });
     } else {
       throw new Error(result.error || 'Script error');

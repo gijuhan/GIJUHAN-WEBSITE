@@ -196,7 +196,7 @@ export const CASE_STUDIES = [
     tags: ["Next.js", "SaaS", "Sports Tech", "Full Stack"],
     description: "Sports player analytics portal with multi-layer authentication for coaches, players & admins.",
     stat: "Multi-Role Sports Analytics Platform",
-    video: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/videos/DC1.mp4",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/DC2.png",
     status: "In Progress",
     services: ["Next.js Development", "Multi-Role Auth System", "Sports Analytics UX", "Full Stack Engineering", "Dashboard Architecture"],
     website: "[Internal Platform — Not Public]",
@@ -210,7 +210,7 @@ export const CASE_STUDIES = [
     tags: ["Next.js", "Event Management", "UI/UX"],
     description: "Feature-rich event management website built on Next.js with booking and showcase flows.",
     stat: "Premium Event Management Platform",
-    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/eleganica.jpg",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/elegancia.jpeg",
     status: "In Progress",
     services: ["Next.js Development", "Event UX Design", "Booking Flow Engineering", "Brand Identity"],
     website: "[Platform in Development]",
@@ -218,18 +218,18 @@ export const CASE_STUDIES = [
     solution: "We built Eleganica on Next.js with a focus on visual storytelling and intuitive booking flows. The site architecture guides visitors from inspiration to inquiry in minimal steps, with showcase sections for past events, service category pages, and a streamlined contact/booking system. The brand identity was woven into every component — from color palette choices to motion design — making Eleganica feel like a premium product, not just a website."
   },
   {
-    slug: "brandwave",
-    title: "BrandWave",
+    slug: "Bave",
+    title: "Bave",
     category: "App Development",
     tags: ["App Development", "SaaS", "Influencer Marketing"],
     description: "Mobile-first platform connecting brands, agencies, and influencers for seamless collaboration.",
     stat: "Brand-Influencer Collaboration App",
-    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/portfolio/brandwave.jpg",
+    image: "https://3ogl08hjksjgbrka.public.blob.vercel-storage.com/images/Bave.png",
     status: "In Progress",
     services: ["App Development", "UI/UX Design", "Platform Architecture", "Influencer-Brand Matching System"],
     website: "[App in Development]",
-    challenge: "The influencer marketing space is fragmented — brands struggle to find the right creators, agencies juggle multiple tools, and influencers have no unified space to showcase their value. BrandWave was built to solve all three problems on one platform.",
-    solution: "BrandWave is a mobile-first collaboration platform where brands, agencies, and influencers can discover, connect, and work together within a single ecosystem. We designed a tri-sided marketplace with tailored dashboards for each user type, a match-and-connect flow, campaign management tools, and a clean profile system for creators to present their reach and engagement data. The architecture is built for scale — designed to grow from MVP to a full-featured collaboration suite."
+    challenge: "The influencer marketing space is fragmented — brands struggle to find the right creators, agencies juggle multiple tools, and influencers have no unified space to showcase their value. Bave was built to solve all three problems on one platform.",
+    solution: "Bave is a mobile-first collaboration platform where brands, agencies, and influencers can discover, connect, and work together within a single ecosystem. We designed a tri-sided marketplace with tailored dashboards for each user type, a match-and-connect flow, campaign management tools, and a clean profile system for creators to present their reach and engagement data. The architecture is built for scale — designed to grow from MVP to a full-featured collaboration suite."
   },
   {
     slug: "ai-mock-interview",

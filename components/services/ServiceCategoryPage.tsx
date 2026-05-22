@@ -7,7 +7,6 @@ import { ArrowDownRight, Layers, Lightbulb, Rocket } from "lucide-react";
 import { SERVICES } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
-import Button from "@/components/ui/Button";
 import type { ServiceCategoryPage as ServiceCategoryPageData } from "@/lib/service-pages";
 
 function generateAbstractTexture(slug: string) {
@@ -26,8 +25,8 @@ export default function ServiceCategoryPage({
 
   return (
     <>
-      <section className="relative h-[120svh] overflow-hidden">
-        <div className="sticky top-0 flex h-[100svh] w-full flex-col justify-center overflow-hidden bg-bg">
+      <section className="relative min-h-[120svh] overflow-hidden">
+        <div className="sticky top-0 flex min-h-screen w-full flex-col justify-center overflow-hidden bg-bg">
           <div className="pointer-events-none absolute inset-0 z-0 opacity-40 mix-blend-screen">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -55,16 +54,17 @@ export default function ServiceCategoryPage({
               startDelay={0.1}
             />
 
-            <div className="mt-12 grid grid-cols-1 items-end gap-8 border-t border-border pt-12 md:mt-24 md:grid-cols-12">
-              <div className="md:col-span-8 lg:col-span-6">
+            <div className="mt-12 border-t border-border pt-12 md:mt-24">
+              <div className="max-w-3xl">
                 <FadeIn delay={0.4}>
                   <p className="border-l-[3px] border-gold bg-surface/40 py-4 pl-6 font-[family-name:var(--font-syne)] text-xl leading-relaxed text-text backdrop-blur-sm md:text-2xl">
                     {page.hero}
                   </p>
                 </FadeIn>
               </div>
-              <div className="flex justify-end md:col-span-4 lg:col-span-6">
-                <span className="mb-[-2rem] select-none font-[family-name:var(--font-shippori)] text-8xl text-muted opacity-20 md:text-[12rem]">
+
+              <div className="mt-10 flex justify-center lg:mt-14 lg:justify-end">
+                <span className="select-none font-[family-name:var(--font-shippori)] text-8xl text-muted opacity-20 md:text-[12rem]">
                   {page.kanji}
                 </span>
               </div>
@@ -244,32 +244,6 @@ export default function ServiceCategoryPage({
               </FadeIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="relative z-20 overflow-hidden bg-bg py-24 md:py-48">
-        <div className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-full max-w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 opacity-30 blur-[100px] mix-blend-screen" />
-
-        <div className="relative z-10 mx-auto max-w-[1000px] px-6 text-center lg:px-12">
-          <FadeIn>
-            <h2 className="mb-8 font-[family-name:var(--font-shippori)] text-4xl font-bold tracking-tighter text-text mix-blend-difference md:text-6xl lg:text-[5rem]">
-              Ready to elevate your <span className="text-gold italic">{page.title}</span> framework?
-            </h2>
-            <p className="mx-auto mb-12 max-w-2xl border-b border-border pb-12 text-lg leading-relaxed text-muted md:text-xl">
-              GIJUHAN partners with ambitious brands across India. Let&apos;s map your next build,
-              campaign, or optimisation sprint with a focused discovery call.
-            </p>
-            <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
-              <Button
-                href="/contact"
-                variant="primary"
-                size="lg"
-                className="h-16 w-full px-12 text-lg sm:w-auto"
-              >
-                Start a {page.title} Project
-              </Button>
-            </div>
-          </FadeIn>
         </div>
       </section>
 

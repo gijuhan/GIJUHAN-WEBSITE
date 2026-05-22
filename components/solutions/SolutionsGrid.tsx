@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ScrambleText from "@/components/ui/ScrambleText";
 import GlobalCTA from "@/components/ui/GlobalCTA";
+import posthog from "posthog-js";
 
 const SOLUTIONS_DATA = [
   {
@@ -109,7 +110,18 @@ function SolutionCard({ data, index }: { data: typeof SOLUTIONS_DATA[0], index: 
       style={{ y, opacity }}
       className="group relative p-8 md:p-10 border border-border bg-surface/30 backdrop-blur-sm overflow-hidden hover:border-border/80 transition-all duration-700"
     >
-      <Link href={`/solutions/${data.id}`} className="absolute inset-0 z-20" aria-label={`View ${data.title} Details`} />
+      <Link
+        href={`/solutions/${data.id}`}
+        className="absolute inset-0 z-20"
+        aria-label={`View ${data.title} Details`}
+        onClick={() =>
+          posthog.capture("solution_card_clicked", {
+            solution_id: data.id,
+            solution_title: data.title,
+            source_page: "solutions",
+          })
+        }
+      />
       {/* Background Matrix Hover Effect */}
       <div 
         className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
