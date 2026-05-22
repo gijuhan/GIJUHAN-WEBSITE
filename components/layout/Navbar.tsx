@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { NAV_LINKS, SERVICES } from "@/lib/constants";
 import { SUB_SERVICES } from "@/lib/sub-services";
+import posthog from "posthog-js";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -99,6 +100,7 @@ export default function Navbar() {
               <Link
                 href="/contact"
                 className="ml-4 px-5 py-2.5 border border-gold/40 rounded-full text-sm font-[family-name:var(--font-syne)] text-gold hover:bg-gold hover:text-bg transition-all duration-300"
+                onClick={() => posthog.capture('nav_start_project_clicked', { location: 'desktop_nav' })}
               >
                 Start a Project
               </Link>
@@ -202,7 +204,10 @@ export default function Navbar() {
               >
                 <Link
                   href="/contact"
-                  onClick={() => setIsMobileOpen(false)}
+                  onClick={() => {
+                    setIsMobileOpen(false);
+                    posthog.capture('nav_start_project_clicked', { location: 'mobile_nav' });
+                  }}
                   className="mt-4 px-8 py-3 border border-gold/40 rounded-full text-lg font-[family-name:var(--font-syne)] text-gold hover:bg-gold hover:text-bg transition-all"
                 >
                   Start a Project

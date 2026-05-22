@@ -5,6 +5,7 @@ import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import Button from "@/components/ui/Button";
 import { SERVICE_OPTIONS } from "@/lib/constants";
 import { Send, CheckCircle } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function ContactPageClient() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -14,22 +15,49 @@ export default function ContactPageClient() {
     setStatus('loading');
 
     const form = e.currentTarget;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const company = (form.elements.namedItem('company') as HTMLInputElement)?.value;
+    const service = (form.elements.namedItem('service') as HTMLSelectElement)?.value;
+    const source = (form.elements.namedItem('source') as HTMLInputElement)?.value;
 
     await fetch('/api/contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-POSTHOG-DISTINCT-ID': posthog.get_distinct_id(),
+        'X-POSTHOG-SESSION-ID': posthog.get_session_id() ?? '',
+      },
       body: JSON.stringify({
-        name: (form.elements.namedItem('name') as HTMLInputElement).value,
-        email: (form.elements.namedItem('email') as HTMLInputElement).value,
-        company: (form.elements.namedItem('company') as HTMLInputElement)?.value,
-        service: (form.elements.namedItem('service') as HTMLSelectElement)?.value,
+        name,
+        email,
+        company,
+        service,
         description: (form.elements.namedItem('description') as HTMLTextAreaElement).value,
-        source: (form.elements.namedItem('source') as HTMLInputElement)?.value,
+        source,
       }),
     })
     .then(r => r.json())
-    .then(r => setStatus(r.success ? 'success' : 'error'))
-    .catch(() => setStatus('error'));
+    .then(r => {
+      if (r.success) {
+        posthog.identify(email, { name, email, company });
+        posthog.capture('contact_form_submitted', {
+          service,
+          company,
+          source,
+          has_company: !!company,
+        });
+        setStatus('success');
+      } else {
+        posthog.capture('contact_form_error', { reason: 'api_error' });
+        setStatus('error');
+      }
+    })
+    .catch((err) => {
+      posthog.captureException(err);
+      posthog.capture('contact_form_error', { reason: 'network_error' });
+      setStatus('error');
+    });
   };
 
   const inputStyles =

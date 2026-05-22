@@ -8,6 +8,7 @@ import { CASE_STUDIES } from "@/lib/constants";
 import { FadeIn, StaggeredText } from "@/components/ui/AnimatedText";
 import ContactCTA from "@/components/home/ContactCTA";
 import RamenAnimation from "@/components/ui/RamenAnimation";
+import posthog from "posthog-js";
 
 export default function WorkPageClient() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -46,7 +47,10 @@ export default function WorkPageClient() {
                 {["Completed", "In Progress"].map((status) => (
                   <button
                     key={status}
-                    onClick={() => setFilter(status as "Completed" | "In Progress")}
+                    onClick={() => {
+                      setFilter(status as "Completed" | "In Progress");
+                      posthog.capture('work_filter_changed', { filter: status });
+                    }}
                     className={`rounded-full border px-6 py-2 font-[family-name:var(--font-syne)] text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
                       filter === status
                         ? "border-gold bg-gold/10 text-gold"
@@ -209,7 +213,11 @@ export default function WorkPageClient() {
                 return (
                   <FadeIn key={study.slug} delay={0.1} direction="up">
                     {isCompleted ? (
-                      <Link href={`/work/${study.slug}`} className="block group cursor-none">
+                      <Link
+                        href={`/work/${study.slug}`}
+                        className="block group cursor-none"
+                        onClick={() => posthog.capture('case_study_clicked', { slug: study.slug, title: study.title, tags: study.tags })}
+                      >
                         {cardContent}
                       </Link>
                     ) : (
